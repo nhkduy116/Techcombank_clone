@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:pinput/pinput.dart';
 import 'package:techcombank_clone/CardAccountScreen.dart';
+import 'package:techcombank_clone/HomeScreen.dart';
 
 class HomeLoginScreen extends StatefulWidget {
   const HomeLoginScreen({super.key});
@@ -153,19 +154,19 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> {
                                     length: 4,
                                     defaultPinTheme: defaultPinTheme,
                                     focusedPinTheme: focusPinTheme,
-                                    onCompleted: (pin) {
-                                      if (pin.length == 4) {
-                                        setCompleted();
-                                        Navigator.push(context, MaterialPageRoute(builder: (context) => CardAccountScreen()));
-                                      }
-                                    },
+                                    // onCompleted: (pin) {
+                                    //   if (pin.length == 4) {
+                                    //     setCompleted();
+                                    //     Navigator.push(context, MaterialPageRoute(builder: (context) => CardAccountScreen()));
+                                    //   }
+                                    // },
                                     onChanged: (pin) {
                                       if (pin.length != 4) {
                                         setCompletedFalse();
                                       } else if (pin.length == 4) {
                                         setCompleted();
                                         _pinPutController.setText('');
-                                        Navigator.push(context, MaterialPageRoute(builder: (context) => CardAccountScreen()));
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
                                       }
                                     },
                                     // onSubmitted: (pin) {
