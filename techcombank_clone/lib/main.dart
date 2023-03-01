@@ -2,8 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:techcombank_clone/CardAccountDetailScreen.dart';
-import 'package:techcombank_clone/CardAccountScreen.dart';
 import 'package:techcombank_clone/HomeLoginScreen.dart';
 
 void main() {
@@ -25,7 +23,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const CardAccountDetailScreen(),
+      home: const HomeLoginScreen(),
     );
   }
 }
