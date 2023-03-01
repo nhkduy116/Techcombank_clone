@@ -1,4 +1,9 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:techcombank_clone/CardAccountDetailScreen.dart';
+import 'package:techcombank_clone/CardAccountScreen.dart';
 import 'package:techcombank_clone/HomeLoginScreen.dart';
 
 void main() {
@@ -10,12 +15,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsFlutterBinding.ensureInitialized();
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent, // transparent status bar
+    ));
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Techcombank Clone',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const HomeLoginScreen(),
+      home: const CardAccountDetailScreen(),
     );
   }
 }
