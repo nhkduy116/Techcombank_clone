@@ -8,9 +8,10 @@ class HomeLoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // double _width = MediaQuery
     return Scaffold(
-      appBar: AppBar(
-            systemOverlayStyle: SystemUiOverlayStyle(statusBarColor: Colors.transparent),
+      body: Container(
+
       ),
     );
   }
