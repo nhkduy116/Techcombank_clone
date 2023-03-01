@@ -19,7 +19,9 @@ class CardAccountScreen extends StatelessWidget {
                 Icons.arrow_back,
                 color: Colors.black,
               ),
-              onPressed: null),
+              onPressed: () {
+                Navigator.pop(context);
+              }),
 //        backgroundColor: Colors.transparent,
           title: Center(
             child:

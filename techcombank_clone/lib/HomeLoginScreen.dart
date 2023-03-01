@@ -1,10 +1,11 @@
-// ignore_for_file: prefer_const_constructors, file_names, no_leading_underscores_for_local_identifiers, unused_local_variable, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, sized_box_for_whitespace, unused_import, unnecessary_import, unnecessary_new, unnecessary_null_comparison, prefer_typing_uninitialized_variables
+// ignore_for_file: prefer_const_constructors, file_names, no_leading_underscores_for_local_identifiers, unused_local_variable, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, sized_box_for_whitespace, unused_import, unnecessary_import, unnecessary_new, unnecessary_null_comparison, prefer_typing_uninitialized_variables, unused_field
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:pinput/pinput.dart';
+import 'package:techcombank_clone/CardAccountScreen.dart';
 
 class HomeLoginScreen extends StatefulWidget {
   const HomeLoginScreen({super.key});
@@ -15,6 +16,7 @@ class HomeLoginScreen extends StatefulWidget {
 
 class _HomeLoginScreenState extends State<HomeLoginScreen> {
   bool isCompleted = false;
+  final TextEditingController _pinPutController = TextEditingController();
 
   void setCompleted() {
     setState(() {
@@ -124,6 +126,9 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   GestureDetector(
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                    },
                                     child: Icon(Icons.close, color: Colors.grey.shade800,),
                                   ),
                                   SizedBox(
@@ -141,6 +146,7 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> {
                                     height: 20,
                                   ),
                                   Pinput(
+                                    controller: _pinPutController,
                                     showCursor: false,
                                     autofocus: true,
                                     useNativeKeyboard: false,
@@ -150,6 +156,7 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> {
                                     onCompleted: (pin) {
                                       if (pin.length == 4) {
                                         setCompleted();
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) => CardAccountScreen()));
                                       }
                                     },
                                     onChanged: (pin) {
@@ -157,6 +164,7 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> {
                                         setCompletedFalse();
                                       } else if (pin.length == 4) {
                                         setCompleted();
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) => CardAccountScreen()));
                                       }
                                     },
                                     onSubmitted: (pin) {
@@ -164,6 +172,7 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> {
                                         setCompletedFalse();
                                       } else if (pin.length == 4) {
                                         setCompleted();
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) => CardAccountScreen()));
                                       }
                                     },
                                   ),
@@ -200,15 +209,29 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> {
                                                       child: Row(
                                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                         children: <Widget>[
-                                                          ButtonNumber(title: '1', color: Colors.white,),
+                                                          ButtonNumber(
+                                                            title: '1',
+                                                            color: Colors.white,
+                                                            onTap: () {
+                                                              _pinPutController.text += '1';
+                                                            },
+                                                          ),
                                                           SizedBox(
                                                             width: 5,
                                                           ),
-                                                          ButtonNumber(title: '2', color: Colors.white,),
+                                                          ButtonNumber(title: '2', color: Colors.white,
+                                                            onTap: () {
+                                                              _pinPutController.text += '2';
+                                                            },
+                                                          ),
                                                           SizedBox(
                                                             width: 5,
                                                           ),
-                                                          ButtonNumber(title: '3', color: Colors.white,),
+                                                          ButtonNumber(title: '3', color: Colors.white,
+                                                            onTap: () {
+                                                              _pinPutController.text += '3';
+                                                            },
+                                                          ),
                                                         ],
                                                       ),
                                                     ),
@@ -220,15 +243,27 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> {
                                                       child: Row(
                                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                         children: <Widget>[
-                                                          ButtonNumber(title: '4', color: Colors.white,),
+                                                          ButtonNumber(title: '4', color: Colors.white,
+                                                            onTap: () {
+                                                              _pinPutController.text += '4';
+                                                            },
+                                                          ),
                                                           SizedBox(
                                                             width: 5,
                                                           ),
-                                                          ButtonNumber(title: '5', color: Colors.white,),
+                                                          ButtonNumber(title: '5', color: Colors.white,
+                                                            onTap: () {
+                                                              _pinPutController.text += '5';
+                                                            },
+                                                          ),
                                                           SizedBox(
                                                             width: 5,
                                                           ),
-                                                          ButtonNumber(title: '6', color: Colors.white,),
+                                                          ButtonNumber(title: '6', color: Colors.white,
+                                                            onTap: () {
+                                                              _pinPutController.text += '6';
+                                                            },
+                                                          ),
                                                         ],
                                                       ),
                                                     ),
@@ -255,7 +290,17 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> {
                                                       borderRadius: BorderRadius.circular(5)
                                                     )
                                                   ),
-                                                  onPressed: () {},
+                                                  onPressed: () {
+                                                    final splited = _pinPutController.text.toString().split('');
+                                                    splited.removeLast();
+                                                    var newstring = '';
+                                                    for (int i = 0; i < splited.length; i++) {
+                                                      newstring += splited[i];
+                                                    }
+                                                    setState(() {
+                                                      _pinPutController.text = newstring;
+                                                    });
+                                                  },
                                                   child: Container(
                                                     width: 30,
                                                     child: Image.asset("assets/delete.jpg")
@@ -286,15 +331,27 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> {
                                                       child: Row(
                                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                         children: <Widget>[
-                                                          ButtonNumber(title: '7', color: Colors.white,),
+                                                          ButtonNumber(title: '7', color: Colors.white,
+                                                            onTap: () {
+                                                              _pinPutController.text += '7';
+                                                            },
+                                                          ),
                                                           SizedBox(
                                                             width: 5,
                                                           ),
-                                                          ButtonNumber(title: '8', color: Colors.white,),
+                                                          ButtonNumber(title: '8', color: Colors.white,
+                                                            onTap: () {
+                                                              _pinPutController.text += '8';
+                                                            },
+                                                          ),
                                                           SizedBox(
                                                             width: 5,
                                                           ),
-                                                          ButtonNumber(title: '9', color: Colors.white,),
+                                                          ButtonNumber(title: '9', color: Colors.white,
+                                                            onTap: () {
+                                                              _pinPutController.text += '9';
+                                                            },
+                                                          ),
                                                         ],
                                                       ),
                                                     ),
@@ -316,7 +373,11 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> {
                                                           SizedBox(
                                                             width: 5,
                                                           ),
-                                                          ButtonNumber(title: '0', color: Colors.white,),
+                                                          ButtonNumber(title: '0', color: Colors.white,
+                                                            onTap: () {
+                                                              _pinPutController.text += '0';
+                                                            },
+                                                          ),
                                                           SizedBox(
                                                             width: 5,
                                                           ),
