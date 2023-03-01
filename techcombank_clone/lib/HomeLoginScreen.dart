@@ -1,10 +1,11 @@
-// ignore_for_file: prefer_const_constructors, file_names, no_leading_underscores_for_local_identifiers, unused_local_variable, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, sized_box_for_whitespace, unused_import, unnecessary_import, unnecessary_new, unnecessary_null_comparison, prefer_typing_uninitialized_variables
+// ignore_for_file: prefer_const_constructors, file_names, no_leading_underscores_for_local_identifiers, unused_local_variable, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, sized_box_for_whitespace, unused_import, unnecessary_import, unnecessary_new, unnecessary_null_comparison, prefer_typing_uninitialized_variables, unused_field
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:pinput/pinput.dart';
+import 'package:techcombank_clone/CardAccountScreen.dart';
 
 class HomeLoginScreen extends StatefulWidget {
   const HomeLoginScreen({super.key});
@@ -15,19 +16,18 @@ class HomeLoginScreen extends StatefulWidget {
 
 class _HomeLoginScreenState extends State<HomeLoginScreen> {
   bool isCompleted = false;
+  final TextEditingController _pinPutController = TextEditingController();
 
   void setCompleted() {
     setState(() {
       isCompleted = true;
     });
   }
-
   void setCompletedFalse() {
     setState(() {
       isCompleted = false;
     });
   }
-
   @override
   Widget build(BuildContext context) {
     double _width = MediaQuery.of(context).size.width;
@@ -42,12 +42,22 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> {
         fontSize: 22,
       ),
       decoration: BoxDecoration(
-        border: Border(bottom: BorderSide(width: 2)),
+        border: Border(
+          bottom: BorderSide(
+            width: 2
+          )
+        ),
       ),
     );
 
     final focusPinTheme = defaultPinTheme.copyBorderWith(
-        border: Border(bottom: BorderSide(color: Color(0xff3682EC), width: 2)));
+        border: Border(
+          bottom: BorderSide(
+            color: Color(0xff3682EC),
+            width: 2
+          )
+        )
+    );
 
     return Scaffold(
       appBar: AppBar(
@@ -96,29 +106,30 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> {
               OutlinedButton(
                 onPressed: () {
                   showModalBottomSheet(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(20),
                         topRight: Radius.circular(20),
-                      )),
-                      isScrollControlled: true,
-                      context: context,
-                      builder: (context) {
-                        return Container(
-                          color: Color(0xffFFFFFF),
-                          height: _height * 0.91,
-                          child: Stack(children: <Widget>[
+                      )
+                    ),
+                    isScrollControlled: true,
+                    context: context,
+                    builder: (context) {
+                      return Container(
+                        color: Color(0xffFFFFFF),
+                        height: _height*0.91,
+                        child: Stack(
+                          children: <Widget>[
                             Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 25),
+                              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 25),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   GestureDetector(
-                                    child: Icon(
-                                      Icons.close,
-                                      color: Colors.grey.shade800,
-                                    ),
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Icon(Icons.close, color: Colors.grey.shade800,),
                                   ),
                                   SizedBox(
                                     height: 40,
@@ -130,16 +141,12 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> {
                                   SizedBox(
                                     height: 20,
                                   ),
-                                  Text(
-                                    "Nhập mã mở khoá để xác thực",
-                                    style: TextStyle(
-                                        fontSize: 30,
-                                        fontWeight: FontWeight.w500),
-                                  ),
+                                  Text("Nhập mã mở khoá để xác thực", style: TextStyle(fontSize: 30, fontWeight: FontWeight.w500),),
                                   SizedBox(
                                     height: 20,
                                   ),
                                   Pinput(
+                                    controller: _pinPutController,
                                     showCursor: false,
                                     autofocus: true,
                                     useNativeKeyboard: false,
@@ -149,6 +156,7 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> {
                                     onCompleted: (pin) {
                                       if (pin.length == 4) {
                                         setCompleted();
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) => CardAccountScreen()));
                                       }
                                     },
                                     onChanged: (pin) {
@@ -156,6 +164,7 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> {
                                         setCompletedFalse();
                                       } else if (pin.length == 4) {
                                         setCompleted();
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) => CardAccountScreen()));
                                       }
                                     },
                                     onSubmitted: (pin) {
@@ -163,292 +172,268 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> {
                                         setCompletedFalse();
                                       } else if (pin.length == 4) {
                                         setCompleted();
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) => CardAccountScreen()));
                                       }
                                     },
                                   ),
                                   SizedBox(
                                     height: 15,
                                   ),
-                                  Text("Quên mã mở khoá?",
-                                      style: TextStyle(
-                                        color: Color(0xff616161),
-                                      )),
+                                  Text("Quên mã mở khoá?", style: TextStyle(color: Color(0xff616161),)),
                                 ],
                               ),
                             ),
                             Positioned(
-                                bottom: 0,
-                                left: 0,
-                                right: 0,
-                                child: Container(
-                                  height: 300,
-                                  color: Color(0xffD2D4DB),
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 5, vertical: 5),
-                                  child: Column(
-                                    children: <Widget>[
-                                      Expanded(
-                                          flex: 1,
-                                          child: Container(
-                                            child: Row(
-                                              children: <Widget>[
-                                                Expanded(
-                                                    flex: 3,
-                                                    child: Container(
-                                                      child: Column(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceAround,
+                              bottom: 0,
+                              left: 0,
+                              right: 0,
+                              child: Container(
+                                height: 300,
+                                color: Color(0xffD2D4DB),
+                                padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                                child: Column(
+                                  children: <Widget>[
+                                    Expanded(
+                                      flex: 1,
+                                      child: Container(
+                                        child: Row(
+                                          children: <Widget>[
+                                            Expanded(
+                                              flex: 3,
+                                              child: Container(
+                                                child: Column(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                  children: <Widget>[
+                                                    Expanded(
+                                                      flex: 1,
+                                                      child: Row(
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                         children: <Widget>[
-                                                          Expanded(
-                                                            flex: 1,
-                                                            child: Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceBetween,
-                                                              children: <
-                                                                  Widget>[
-                                                                ButtonNumber(
-                                                                  title: '1',
-                                                                  color: Colors
-                                                                      .white,
-                                                                ),
-                                                                SizedBox(
-                                                                  width: 5,
-                                                                ),
-                                                                ButtonNumber(
-                                                                  title: '2',
-                                                                  color: Colors
-                                                                      .white,
-                                                                ),
-                                                                SizedBox(
-                                                                  width: 5,
-                                                                ),
-                                                                ButtonNumber(
-                                                                  title: '3',
-                                                                  color: Colors
-                                                                      .white,
-                                                                ),
-                                                              ],
-                                                            ),
+                                                          ButtonNumber(
+                                                            title: '1',
+                                                            color: Colors.white,
+                                                            onTap: () {
+                                                              _pinPutController.text += '1';
+                                                            },
                                                           ),
                                                           SizedBox(
-                                                            height: 5,
+                                                            width: 5,
                                                           ),
-                                                          Expanded(
-                                                            flex: 1,
-                                                            child: Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceBetween,
-                                                              children: <
-                                                                  Widget>[
-                                                                ButtonNumber(
-                                                                  title: '4',
-                                                                  color: Colors
-                                                                      .white,
-                                                                ),
-                                                                SizedBox(
-                                                                  width: 5,
-                                                                ),
-                                                                ButtonNumber(
-                                                                  title: '5',
-                                                                  color: Colors
-                                                                      .white,
-                                                                ),
-                                                                SizedBox(
-                                                                  width: 5,
-                                                                ),
-                                                                ButtonNumber(
-                                                                  title: '6',
-                                                                  color: Colors
-                                                                      .white,
-                                                                ),
-                                                              ],
-                                                            ),
+                                                          ButtonNumber(title: '2', color: Colors.white,
+                                                            onTap: () {
+                                                              _pinPutController.text += '2';
+                                                            },
                                                           ),
                                                           SizedBox(
-                                                            height: 2.5,
+                                                            width: 5,
+                                                          ),
+                                                          ButtonNumber(title: '3', color: Colors.white,
+                                                            onTap: () {
+                                                              _pinPutController.text += '3';
+                                                            },
                                                           ),
                                                         ],
                                                       ),
-                                                    )),
-                                                Expanded(
-                                                    flex: 1,
-                                                    child: Container(
-                                                      margin: EdgeInsets.only(
-                                                        left: 5,
-                                                        bottom: 2.5,
-                                                      ),
-                                                      width: _width,
-                                                      height: _height,
-                                                      decoration: BoxDecoration(
-                                                          color:
-                                                              Color(0xffAFB2BC),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(5)),
-                                                      child: OutlinedButton(
-                                                          style: OutlinedButton.styleFrom(
-                                                              shape: RoundedRectangleBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              5))),
-                                                          onPressed: () {},
-                                                          child: Container(
-                                                              width: 30,
-                                                              child: Image.asset(
-                                                                  "assets/delete.jpg"))),
-                                                    )),
-                                              ],
-                                            ),
-                                          )),
-                                      Expanded(
-                                          flex: 1,
-                                          child: Container(
-                                            child: Row(
-                                              children: <Widget>[
-                                                Expanded(
-                                                    flex: 3,
-                                                    child: Container(
-                                                      child: Column(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceAround,
+                                                    ),
+                                                    SizedBox(
+                                                      height: 5,
+                                                    ),
+                                                    Expanded(
+                                                      flex: 1,
+                                                      child: Row(
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                         children: <Widget>[
-                                                          SizedBox(
-                                                            height: 2.5,
-                                                          ),
-                                                          Expanded(
-                                                            flex: 1,
-                                                            child: Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceBetween,
-                                                              children: <
-                                                                  Widget>[
-                                                                ButtonNumber(
-                                                                  title: '7',
-                                                                  color: Colors
-                                                                      .white,
-                                                                ),
-                                                                SizedBox(
-                                                                  width: 5,
-                                                                ),
-                                                                ButtonNumber(
-                                                                  title: '8',
-                                                                  color: Colors
-                                                                      .white,
-                                                                ),
-                                                                SizedBox(
-                                                                  width: 5,
-                                                                ),
-                                                                ButtonNumber(
-                                                                  title: '9',
-                                                                  color: Colors
-                                                                      .white,
-                                                                ),
-                                                              ],
-                                                            ),
+                                                          ButtonNumber(title: '4', color: Colors.white,
+                                                            onTap: () {
+                                                              _pinPutController.text += '4';
+                                                            },
                                                           ),
                                                           SizedBox(
-                                                            height: 5,
+                                                            width: 5,
                                                           ),
-                                                          Expanded(
-                                                            flex: 1,
-                                                            child: Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceBetween,
-                                                              children: <
-                                                                  Widget>[
-                                                                Expanded(
-                                                                    flex: 1,
-                                                                    child:
-                                                                        Container(
-                                                                      width:
-                                                                          _width,
-                                                                      height:
-                                                                          _height *
-                                                                              0.9,
-                                                                    )),
-                                                                SizedBox(
-                                                                  width: 5,
-                                                                ),
-                                                                ButtonNumber(
-                                                                  title: '0',
-                                                                  color: Colors
-                                                                      .white,
-                                                                ),
-                                                                SizedBox(
-                                                                  width: 5,
-                                                                ),
-                                                                Expanded(
-                                                                    flex: 1,
-                                                                    child:
-                                                                        Container(
-                                                                      width:
-                                                                          _width,
-                                                                      height:
-                                                                          _height *
-                                                                              0.9,
-                                                                    )),
-                                                              ],
-                                                            ),
+                                                          ButtonNumber(title: '5', color: Colors.white,
+                                                            onTap: () {
+                                                              _pinPutController.text += '5';
+                                                            },
                                                           ),
                                                           SizedBox(
-                                                            height: 2.5,
+                                                            width: 5,
+                                                          ),
+                                                          ButtonNumber(title: '6', color: Colors.white,
+                                                            onTap: () {
+                                                              _pinPutController.text += '6';
+                                                            },
                                                           ),
                                                         ],
                                                       ),
-                                                    )),
-                                                Expanded(
-                                                    flex: 1,
-                                                    child: Container(
-                                                      margin: EdgeInsets.only(
-                                                        left: 5,
-                                                        bottom: 2.5,
-                                                      ),
-                                                      width: _width,
-                                                      height: _height,
-                                                      decoration: BoxDecoration(
-                                                          color: !isCompleted
-                                                              ? Color(
-                                                                  0xffC5C5C5)
-                                                              : Color(
-                                                                  0xffAFB2BC),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(5)),
-                                                      child: OutlinedButton(
-                                                          style: OutlinedButton.styleFrom(
-                                                              shape: RoundedRectangleBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              5))),
-                                                          onPressed: () {},
-                                                          child: Text(
-                                                            "Xong",
-                                                            style: TextStyle(
-                                                                color: !isCompleted
-                                                                    ? Color(
-                                                                        0xffA0A0A0)
-                                                                    : Colors
-                                                                        .black,
-                                                                fontSize: 18),
-                                                          )),
-                                                    )),
-                                              ],
+                                                    ),
+                                                    SizedBox(
+                                                      height: 2.5,
+                                                    ),
+                                                  ],
+                                                ),
+                                              )
                                             ),
-                                          )),
-                                    ],
-                                  ),
-                                )),
-                          ]),
-                        );
-                      });
+                                            Expanded(
+                                              flex: 1,
+                                              child: Container(
+                                                margin: EdgeInsets.only(left: 5, bottom: 2.5, ),
+                                                width: _width,
+                                                height: _height,
+                                                decoration: BoxDecoration(
+                                                  color: Color(0xffAFB2BC),
+                                                  borderRadius: BorderRadius.circular(5)
+                                                ),
+                                                child: OutlinedButton(
+                                                  style: OutlinedButton.styleFrom(
+                                                    shape: RoundedRectangleBorder(
+                                                      borderRadius: BorderRadius.circular(5)
+                                                    )
+                                                  ),
+                                                  onPressed: () {
+                                                    final splited = _pinPutController.text.toString().split('');
+                                                    splited.removeLast();
+                                                    var newstring = '';
+                                                    for (int i = 0; i < splited.length; i++) {
+                                                      newstring += splited[i];
+                                                    }
+                                                    setState(() {
+                                                      _pinPutController.text = newstring;
+                                                    });
+                                                  },
+                                                  child: Container(
+                                                    width: 30,
+                                                    child: Image.asset("assets/delete.jpg")
+                                                  )
+                                                ),
+                                              )
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: Container(
+                                        child: Row(
+                                          children: <Widget>[
+                                            Expanded(
+                                              flex: 3,
+                                              child: Container(
+                                                child: Column(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                  children: <Widget>[
+                                                    SizedBox(
+                                                      height: 2.5,
+                                                    ),
+                                                    Expanded(
+                                                      flex: 1,
+                                                      child: Row(
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        children: <Widget>[
+                                                          ButtonNumber(title: '7', color: Colors.white,
+                                                            onTap: () {
+                                                              _pinPutController.text += '7';
+                                                            },
+                                                          ),
+                                                          SizedBox(
+                                                            width: 5,
+                                                          ),
+                                                          ButtonNumber(title: '8', color: Colors.white,
+                                                            onTap: () {
+                                                              _pinPutController.text += '8';
+                                                            },
+                                                          ),
+                                                          SizedBox(
+                                                            width: 5,
+                                                          ),
+                                                          ButtonNumber(title: '9', color: Colors.white,
+                                                            onTap: () {
+                                                              _pinPutController.text += '9';
+                                                            },
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 5,
+                                                    ),
+                                                    Expanded(
+                                                      flex: 1,
+                                                      child: Row(
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        children: <Widget>[
+                                                          Expanded(
+                                                            flex: 1,
+                                                            child: Container(
+                                                              width: _width,
+                                                              height: _height*0.9,
+                                                            )
+                                                          ),
+                                                          SizedBox(
+                                                            width: 5,
+                                                          ),
+                                                          ButtonNumber(title: '0', color: Colors.white,
+                                                            onTap: () {
+                                                              _pinPutController.text += '0';
+                                                            },
+                                                          ),
+                                                          SizedBox(
+                                                            width: 5,
+                                                          ),
+                                                          Expanded(
+                                                            flex: 1,
+                                                            child: Container(
+                                                              width: _width,
+                                                              height: _height*0.9,
+                                                            )
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 2.5,
+                                                    ),
+                                                  ],
+                                                ),
+                                              )
+                                            ),
+                                            Expanded(
+                                              flex: 1,
+                                              child: Container(
+                                                margin: EdgeInsets.only(left: 5, bottom: 2.5, ),
+                                                width: _width,
+                                                height: _height,
+                                                decoration: BoxDecoration(
+                                                  color: !isCompleted ? Color(0xffC5C5C5) : Color(0xffAFB2BC),
+                                                  borderRadius: BorderRadius.circular(5)
+                                                ),
+                                                child: OutlinedButton(
+                                                  style: OutlinedButton.styleFrom(
+                                                    shape: RoundedRectangleBorder(
+                                                      borderRadius: BorderRadius.circular(5)
+                                                    )
+                                                  ),
+                                                  onPressed: () {
+
+                                                  },
+                                                  child: Text("Xong", style: TextStyle(color: !isCompleted ? Color(0xffA0A0A0) : Colors.black, fontSize: 18),)
+                                                ),
+                                              )
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ),
+                          ]
+                        ),
+                      );
+                    }
+                  );
                 },
                 style: OutlinedButton.styleFrom(
                     backgroundColor: Colors.white,
@@ -470,8 +455,9 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> {
                 width: _width,
                 height: 95,
                 decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10)),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10)
+                ),
                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -512,8 +498,7 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> {
                                 child: Text(
                                   'Chuyển tiền & thanh toán',
                                   textAlign: TextAlign.center,
-                                  style: TextStyle(fontSize: 12),
-                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(fontSize: 12),overflow: TextOverflow.ellipsis,
                                   maxLines: 2,
                                 ))
                           ],
@@ -533,8 +518,7 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> {
                                 child: Text(
                                   'Quét mã QR',
                                   textAlign: TextAlign.center,
-                                  style: TextStyle(fontSize: 12),
-                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(fontSize: 12),overflow: TextOverflow.ellipsis,
                                   maxLines: 2,
                                 ))
                           ],
@@ -546,16 +530,14 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Container(
-                                width: _width * 0.07,
-                                child: Image.asset("assets/pay.jpg")),
+                                width: _width * 0.07, child: Image.asset("assets/pay.jpg")),
                             Container(
                                 width: _width * 0.17,
                                 alignment: Alignment.center,
                                 child: Text(
                                   'Rút tiền không thẻ',
                                   textAlign: TextAlign.center,
-                                  style: TextStyle(fontSize: 12),
-                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(fontSize: 12),overflow: TextOverflow.ellipsis,
                                   maxLines: 2,
                                 ))
                           ],
@@ -567,16 +549,14 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Container(
-                                width: _width * 0.07,
-                                child: Image.asset("assets/home.jpg")),
+                                width: _width * 0.07, child: Image.asset("assets/home.jpg")),
                             Container(
                                 width: _width * 0.17,
                                 alignment: Alignment.center,
                                 child: Text(
                                   'Khám phá sản phẩm',
                                   textAlign: TextAlign.center,
-                                  style: TextStyle(fontSize: 12),
-                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(fontSize: 12),overflow: TextOverflow.ellipsis,
                                   maxLines: 2,
                                 ))
                           ],
@@ -589,7 +569,7 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> {
               ),
               Container(
                 width: _width,
-                height: 87 * 3,
+                height: 87*3,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color: Colors.white,
@@ -604,38 +584,34 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> {
                         child: Row(
                           children: <Widget>[
                             Expanded(
-                                flex: 1,
-                                child: Center(
-                                  child: Container(
-                                      width: 30,
-                                      child: Image.asset("assets/book.jpg")),
-                                )),
+                              flex: 1,
+                              child: Center(
+                                child: Container(
+                                  width: 30,
+                                  child: Image.asset("assets/book.jpg")
+                                ),
+                              )
+                            ),
                             SizedBox(
                               width: 20,
                             ),
                             Expanded(
-                                flex: 7,
-                                child: Container(
-                                  height: _height,
-                                  decoration: BoxDecoration(
-                                      border:
-                                          Border(bottom: BorderSide(width: 1))),
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: <Widget>[
-                                      Text(
-                                        'Hướng dẫn sử dụng',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 20),
-                                      ),
-                                      Icon(Icons.keyboard_arrow_right)
-                                    ],
-                                  ),
-                                )),
+                              flex: 7,
+                              child: Container(
+                                height: _height,
+                                decoration: BoxDecoration(
+                                  border: Border(bottom: BorderSide(width: 1))       
+                                ),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Text('Hướng dẫn sử dụng', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
+                                    Icon(Icons.keyboard_arrow_right)
+                                  ],
+                                ),
+                              )
+                            ),
                           ],
                         ),
                       ),
@@ -648,38 +624,34 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> {
                         child: Row(
                           children: <Widget>[
                             Expanded(
-                                flex: 1,
-                                child: Center(
-                                  child: Container(
-                                      width: 30,
-                                      child: Image.asset("assets/warning.jpg")),
-                                )),
+                              flex: 1,
+                              child: Center(
+                                child: Container(
+                                  width: 30,
+                                  child: Image.asset("assets/warning.jpg")
+                                ),
+                              )
+                            ),
                             SizedBox(
                               width: 20,
                             ),
                             Expanded(
-                                flex: 7,
-                                child: Container(
-                                  height: _height,
-                                  decoration: BoxDecoration(
-                                      border:
-                                          Border(bottom: BorderSide(width: 1))),
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: <Widget>[
-                                      Text(
-                                        'Hướng dẫn bảo mật',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 20),
-                                      ),
-                                      Icon(Icons.keyboard_arrow_right)
-                                    ],
-                                  ),
-                                )),
+                              flex: 7,
+                              child: Container(
+                                height: _height,
+                                decoration: BoxDecoration(
+                                  border: Border(bottom: BorderSide(width: 1))       
+                                ),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Text('Hướng dẫn bảo mật', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
+                                    Icon(Icons.keyboard_arrow_right)
+                                  ],
+                                ),
+                              )
+                            ),
                           ],
                         ),
                       ),
@@ -692,35 +664,31 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> {
                         child: Row(
                           children: <Widget>[
                             Expanded(
-                                flex: 1,
-                                child: Center(
-                                  child: Container(
-                                      width: 30,
-                                      child: Image.asset("assets/phone.jpg")),
-                                )),
+                              flex: 1,
+                              child: Center(
+                                child: Container(
+                                  width: 30,
+                                  child: Image.asset("assets/phone.jpg")
+                                ),
+                              )
+                            ),
                             SizedBox(
                               width: 20,
                             ),
                             Expanded(
-                                flex: 7,
-                                child: Container(
-                                  height: _height,
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: <Widget>[
-                                      Text(
-                                        'Liên hệ',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 20),
-                                      ),
-                                      Icon(Icons.keyboard_arrow_right)
-                                    ],
-                                  ),
-                                )),
+                              flex: 7,
+                              child: Container(
+                                height: _height,
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Text('Liên hệ', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
+                                    Icon(Icons.keyboard_arrow_right)
+                                  ],
+                                ),
+                              )
+                            ),
                           ],
                         ),
                       ),
@@ -748,25 +716,22 @@ class ButtonNumber extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Expanded(
-        flex: 1,
-        child: Container(
-          width: width,
-          height: height * 0.9,
-          child: OutlinedButton(
-              style: OutlinedButton.styleFrom(
-                  backgroundColor: color,
-                  shadowColor: Colors.grey.shade900,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5))),
-              onPressed: onTap,
-              child: Text(
-                title!,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 28,
-                    fontWeight: FontWeight.w400),
-              )),
-        ));
+      flex: 1,
+      child: Container(
+        width: width,
+        height: height*0.9,
+        child: OutlinedButton(
+          style: OutlinedButton.styleFrom(
+            backgroundColor: color,
+            shadowColor: Colors.grey.shade900,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5)
+            )
+          ),
+          onPressed: onTap,
+          child: Text(title!, textAlign: TextAlign.center, style: TextStyle(color: Colors.black, fontSize: 28, fontWeight: FontWeight.w400),)
+        ),
+      )
+    );
   }
 }
