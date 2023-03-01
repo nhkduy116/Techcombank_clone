@@ -164,17 +164,18 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> {
                                         setCompletedFalse();
                                       } else if (pin.length == 4) {
                                         setCompleted();
+                                        _pinPutController.setText('');
                                         Navigator.push(context, MaterialPageRoute(builder: (context) => CardAccountScreen()));
                                       }
                                     },
-                                    onSubmitted: (pin) {
-                                      if (pin.length != 4) {
-                                        setCompletedFalse();
-                                      } else if (pin.length == 4) {
-                                        setCompleted();
-                                        Navigator.push(context, MaterialPageRoute(builder: (context) => CardAccountScreen()));
-                                      }
-                                    },
+                                    // onSubmitted: (pin) {
+                                    //   if (pin.length != 4) {
+                                    //     setCompletedFalse();
+                                    //   } else if (pin.length == 4) {
+                                    //     setCompleted();
+                                    //     // Navigator.push(context, MaterialPageRoute(builder: (context) => CardAccountScreen()));
+                                    //   }
+                                    // },
                                   ),
                                   SizedBox(
                                     height: 15,
