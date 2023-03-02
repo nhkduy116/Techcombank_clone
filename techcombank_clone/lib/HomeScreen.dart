@@ -1,7 +1,9 @@
 // ignore_for_file: prefer_const_constructors, file_names, no_leading_underscores_for_local_identifiers, unused_local_variable, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, sized_box_for_whitespace, unused_import, unnecessary_import, unnecessary_new, unnecessary_null_comparison, prefer_typing_uninitialized_variables, unused_field, implementation_imports
 
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:techcombank_clone/CardAccountScreen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -58,6 +60,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: ((context) => CardAccountScreen()))
+                            );
+                          },
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -244,6 +252,135 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ],
                   ),
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                CarouselSlider(
+                  options: CarouselOptions(
+                    autoPlay: false,
+                    pageSnapping: false,
+                    height: 120,
+                    aspectRatio: 3,
+                    clipBehavior: Clip.none,
+                    viewportFraction: 0.95,
+                    enlargeCenterPage: false,
+                    enableInfiniteScroll: false,
+                    pauseAutoPlayInFiniteScroll: true,
+                    padEnds: false,
+                  ),
+                  items: [
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                        color: Color(0xffE8E2D4),
+                        boxShadow: <BoxShadow>[
+                          BoxShadow(
+                              color: Colors.black54,
+                              blurRadius: 8.0,
+                              offset: Offset(0.0, 0.5)
+                          )
+                        ],
+                      ),
+                      margin: EdgeInsets.only(right: 20),
+                      width: _width*0.9,
+                      padding: EdgeInsets.only(left: 20, right: 10, bottom: 10, top: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            width: _width*0.46,
+                            height: _height,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Container(
+                                  width: _width*0.5,
+                                  child: Text("Ưu đãi lãi suất tiền gửi tiết kiệm online lên đến 8.7%/năm",
+                                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                                    overflow: TextOverflow.ellipsis, maxLines: 3,),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  children: [
+                                    Text("Gửi tiết kiệm ngay",
+                                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),),
+                                    SizedBox(width: 10,),
+                                    Icon(Icons.arrow_forward, size: 18,)
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                          Container(
+                            width: _width*0.27,
+                            height: _height,
+                            child: Image.asset("assets/sale.jpg", fit: BoxFit.fill,),
+                          )
+                        ],
+                      ),
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                        color: Color(0xffE8E2D4),
+                        boxShadow: <BoxShadow>[
+                          BoxShadow(
+                              color: Colors.black54,
+                              blurRadius: 8.0,
+                              offset: Offset(0.0, 0.5)
+                          )
+                        ],
+                      ),
+                      margin: EdgeInsets.only(right: 20),
+                      width: _width*0.9,
+                      padding: EdgeInsets.only(left: 20, right: 10, bottom: 10, top: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            width: _width*0.46,
+                            height: _height,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Container(
+                                  width: _width*0.5,
+                                  child: Text("Ưu đãi lãi suất tiền gửi tiết kiệm online lên đến 8.7%/năm",
+                                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                                    overflow: TextOverflow.ellipsis, maxLines: 3,),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  children: [
+                                    Text("Gửi tiết kiệm ngay",
+                                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),),
+                                    SizedBox(width: 10,),
+                                    Icon(Icons.arrow_forward, size: 18,)
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                          Container(
+                            width: _width*0.27,
+                            height: _height,
+                            child: Image.asset("assets/sale.jpg", fit: BoxFit.fill,),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
