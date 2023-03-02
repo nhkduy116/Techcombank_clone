@@ -3,7 +3,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:provider/provider.dart';
 import 'package:techcombank_clone/CardAccountScreen.dart';
+import 'package:techcombank_clone/DataAcc.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -399,7 +401,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Row(
                   children: <Widget>[
                     SizedBox(
-                      width: 7,
+                      width: 3,
                     ),
                     Expanded(
                         flex: 1,
@@ -425,11 +427,16 @@ class _HomeScreenState extends State<HomeScreen> {
                               SizedBox(
                                 height: 5,
                               ),
-                              Text(
-                                "354,604",
-                                style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.w400),
+                              Consumer<MyData>(
+                                builder: (context, myData, child) {
+                                  return Text(
+                                    myData.money.toString(),
+                                    style: TextStyle(
+                                        fontSize: 18, fontWeight: FontWeight.w600),
+                                  );
+                                },
                               )
+                              
                             ],
                           ),
                         ))

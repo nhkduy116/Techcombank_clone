@@ -40,6 +40,7 @@ dependencies:
   modal_bottom_sheet: ^2.1.2
   pinput: ^2.2.31
   carousel_slider: ^4.2.1
+  provider: ^6.0.5
 
 dev_dependencies:
   flutter_test:

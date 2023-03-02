@@ -3,6 +3,8 @@
 import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'package:techcombank_clone/DataAcc.dart';
 
 class CardAccountScreen extends StatelessWidget {
   const CardAccountScreen({super.key});
@@ -121,12 +123,17 @@ class CardAccountScreen extends StatelessWidget {
                                             children: [
                                               Container(
                                                 child: Text(
-                                                  "Tài khoản thanh toán",
+                                                  "Tài khoản thanh toán", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
                                                 ),
                                               ),
+                                              SizedBox(height: 5,),
                                               Container(
-                                                child: Text(
-                                                  "Số tài khoản",
+                                                child: Consumer<MyData>(
+                                                  builder: (context, myData, child) {
+                                                    return Text(
+                                                      myData.numberAcc.toString(), style: TextStyle(color: Color(0xff757575)),
+                                                    );
+                                                  }
                                                 ),
                                               )
                                             ]),
@@ -144,7 +151,11 @@ class CardAccountScreen extends StatelessWidget {
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
                                         Text("VND "),
-                                        Text("1,230,000"),
+                                        Consumer<MyData>(
+                                          builder: (context, myData, child) {
+                                            return Text(myData.money.toString(), style: TextStyle(fontWeight: FontWeight.bold));
+                                          }
+                                        ),
                                       ],
                                     ),
                                   ),

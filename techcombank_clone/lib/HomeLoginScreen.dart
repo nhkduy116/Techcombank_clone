@@ -5,7 +5,9 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:pinput/pinput.dart';
+import 'package:provider/provider.dart';
 import 'package:techcombank_clone/CardAccountScreen.dart';
+import 'package:techcombank_clone/DataAcc.dart';
 import 'package:techcombank_clone/HomeScreen.dart';
 
 class HomeLoginScreen extends StatefulWidget {
@@ -91,13 +93,18 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> {
                           fontWeight: FontWeight.bold,
                           color: Colors.white),
                     ),
-                    Text(
-                      "LE TAN CUONG",
-                      style: TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white),
-                    )
+                    Consumer<MyData>(
+                      builder: (context, myData, child) {
+                        return Text(
+                          myData.name.toString(),
+                          style: TextStyle(
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
+                        );
+                      },
+                    ),
+                    
                   ],
                 ),
               ),

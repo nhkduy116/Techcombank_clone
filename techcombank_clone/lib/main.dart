@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'package:techcombank_clone/DataAcc.dart';
 import 'package:techcombank_clone/HomeLoginScreen.dart';
 
 void main() {
@@ -17,13 +19,16 @@ class MyApp extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Colors.transparent, // transparent status bar
     ));
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Techcombank Clone',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return ChangeNotifierProvider(
+      create: (context) => MyData(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Techcombank Clone',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: const HomeLoginScreen(),
       ),
-      home: const HomeLoginScreen(),
     );
   }
 }
