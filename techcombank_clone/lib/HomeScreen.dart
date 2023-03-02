@@ -6,6 +6,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 import 'package:techcombank_clone/CardAccountScreen.dart';
 import 'package:techcombank_clone/DataAcc.dart';
+import 'package:techcombank_clone/ManageDetailAcc.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -31,7 +32,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     backgroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(30)))),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+                  ManageDetailAcc()), (Route<dynamic> route) => false);
+                },
                 child: Image.asset("assets/menu.jpg")),
           ),
         ),

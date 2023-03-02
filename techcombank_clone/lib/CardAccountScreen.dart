@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, file_names, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers
+// ignore_for_file: prefer_const_constructors, file_names, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, no_leading_underscores_for_local_identifiers
 
 import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +13,6 @@ class CardAccountScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     double _width = MediaQuery.of(context).size.width;
     double _height = MediaQuery.of(context).size.height;
-    // double _width = MediaQuery
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
@@ -24,7 +23,6 @@ class CardAccountScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.pop(context);
               }),
-//        backgroundColor: Colors.transparent,
           title: Center(
             child:
                 Text("Tài khoản & thẻ", style: TextStyle(color: Colors.black)),

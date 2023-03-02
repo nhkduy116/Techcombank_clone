@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:techcombank_clone/CardAccountScreen.dart';
 import 'package:techcombank_clone/DataAcc.dart';
 import 'package:techcombank_clone/HomeScreen.dart';
+import 'package:techcombank_clone/ManageDetailAcc.dart';
 
 class HomeLoginScreen extends StatefulWidget {
   const HomeLoginScreen({super.key});
@@ -17,9 +18,26 @@ class HomeLoginScreen extends StatefulWidget {
   State<HomeLoginScreen> createState() => _HomeLoginScreenState();
 }
 
-class _HomeLoginScreenState extends State<HomeLoginScreen> {
+class _HomeLoginScreenState extends State<HomeLoginScreen> with TickerProviderStateMixin {
   bool isCompleted = false;
   final TextEditingController _pinPutController = TextEditingController();
+  late AnimationController _animationController;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 700),
+    );
+    _animation = CurvedAnimation(
+      parent: _animationController,
+      curve: Curves.easeInOut,
+    );
+    _animationController.forward();
+  }
+
 
   void setCompleted() {
     setState(() {
@@ -33,6 +51,7 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> {
   }
   @override
   Widget build(BuildContext context) {
+    
     double _width = MediaQuery.of(context).size.width;
     double _height = MediaQuery.of(context).size.height;
     const borderColor = Color.fromRGBO(23, 171, 144, 0.4);
@@ -114,6 +133,7 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> {
               OutlinedButton(
                 onPressed: () {
                   showModalBottomSheet(
+                    transitionAnimationController: _animationController,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(20),
@@ -123,8 +143,16 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> {
                     isScrollControlled: true,
                     context: context,
                     builder: (context) {
-                      return Container(
-                        color: Color(0xffFFFFFF),
+                      return FadeTransition(
+                        opacity: _animation,
+                        child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            topRight: Radius.circular(20),
+                          ),
+                          color: Color(0xffFFFFFF),
+                        ),
                         height: _height*0.91,
                         child: Stack(
                           children: <Widget>[
@@ -154,6 +182,7 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> {
                                     height: 20,
                                   ),
                                   Pinput(
+                                    obscureText: true,
                                     controller: _pinPutController,
                                     showCursor: false,
                                     autofocus: true,
@@ -161,29 +190,17 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> {
                                     length: 4,
                                     defaultPinTheme: defaultPinTheme,
                                     focusedPinTheme: focusPinTheme,
-                                    // onCompleted: (pin) {
-                                    //   if (pin.length == 4) {
-                                    //     setCompleted();
-                                    //     Navigator.push(context, MaterialPageRoute(builder: (context) => CardAccountScreen()));
-                                    //   }
-                                    // },
                                     onChanged: (pin) {
                                       if (pin.length != 4) {
                                         setCompletedFalse();
                                       } else if (pin.length == 4) {
                                         setCompleted();
-                                        _pinPutController.setText('');
-                                        Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                                        Future.delayed(Duration(milliseconds: 600)).then((value) {
+                                          _pinPutController.setText('');
+                                          Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                                        });
                                       }
                                     },
-                                    // onSubmitted: (pin) {
-                                    //   if (pin.length != 4) {
-                                    //     setCompletedFalse();
-                                    //   } else if (pin.length == 4) {
-                                    //     setCompleted();
-                                    //     // Navigator.push(context, MaterialPageRoute(builder: (context) => CardAccountScreen()));
-                                    //   }
-                                    // },
                                   ),
                                   SizedBox(
                                     height: 15,
@@ -440,6 +457,7 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> {
                             ),
                           ]
                         ),
+                      ),
                       );
                     }
                   );
@@ -553,6 +571,10 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> {
                         ),
                       ),
                       GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+                          ManageDetailAcc()), (Route<dynamic> route) => false);
+                        },
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -711,6 +733,13 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> {
       ),
     );
   }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
 }
 
 class ButtonNumber extends StatelessWidget {
