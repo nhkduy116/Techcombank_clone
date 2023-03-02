@@ -86,15 +86,15 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> with TickerProviderSt
         backgroundColor: Color(0xffBA2F32),
         elevation: 0,
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          width: _width,
-          height: _height,
-          padding: EdgeInsets.symmetric(horizontal: 15),
-          decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage("assets/bg.jpg"), fit: BoxFit.cover),
-          ),
+      body: Container(
+        width: _width,
+        height: _height,
+        padding: EdgeInsets.symmetric(horizontal: 15),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage("assets/bg.jpg"), fit: BoxFit.cover),
+        ),
+        child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -441,7 +441,7 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> with TickerProviderSt
                                                     )
                                                   ),
                                                   onPressed: () {
-
+        
                                                   },
                                                   child: Text("Xong", style: TextStyle(color: !isCompleted ? Color(0xffA0A0A0) : Colors.black, fontSize: 18),)
                                                 ),
@@ -726,7 +726,127 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> with TickerProviderSt
                     ),
                   ],
                 ),
-              )
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Container(
+                width: _width,
+                height: 280,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(10))
+                ),
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      width: _width,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10))
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+                        child: Image.asset("assets/map.jpg", fit: BoxFit.cover,)
+                      ),
+                    ),
+                    Container(
+                      width: _width,
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      child: Row(
+                        children: <Widget>[
+                          SizedBox(
+                            width: _width*0.14,
+                          ),
+                          Container(
+                            child: Column(
+                              children: <Widget>[
+                                Container(
+                                  width: _width*0.7,
+                                  height: 80,
+                                  decoration: BoxDecoration(
+                                    // color: Colors.yellow,
+                                    border: Border(
+                                      bottom: BorderSide(width: 1, color: Color(0xffCCCCCC))
+                                    )
+                                  ),
+                                  alignment: Alignment.centerLeft,
+                                  child: Text("Tìm chi nhánh & ATM", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),),
+                                ),
+                                Container(
+                                  width: _width*0.7,
+                                  height: 80,
+                                  padding: EdgeInsets.symmetric(vertical: 14),
+                                  alignment: Alignment.centerLeft,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Text("Đặt lịch hẹn", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),),
+                                      Text("Để được hỗ trợ và phục vụ tốt nhất tại quầy", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Container(
+                width: _width,
+                height: 150,
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(10))
+                ),
+                child: Container(
+                  width: _width,
+                  alignment: Alignment.bottomCenter,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        width: 160,
+                        height: 40,
+                        margin: EdgeInsets.only(left: 20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Tổng đài Techcombank", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300),),
+                            Text("1800 588 822", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),)
+                          ],
+                        ),
+                      ),
+                      OutlinedButton(
+                        onPressed: () {},
+                        style: OutlinedButton.styleFrom(
+                          backgroundColor: Colors.black,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20))),
+                          child: Container(
+                            alignment: Alignment.centerRight,
+                            width: 70,
+                            height: 40,
+                            child: Text(
+                              "Gọi",
+                              style: TextStyle(color: Colors.white),
+                          )
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
             ],
           ),
         ),
