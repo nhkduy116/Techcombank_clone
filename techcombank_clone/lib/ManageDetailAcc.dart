@@ -15,12 +15,19 @@ class ManageDetailAcc extends StatefulWidget {
 }
 
 class _ManageDetailAccState extends State<ManageDetailAcc> {
-
   final _formKey = GlobalKey<FormState>();
   final TextEditingController userAcc = new TextEditingController();
   final TextEditingController money = new TextEditingController();
   final TextEditingController numberAcc = new TextEditingController();
   final TextEditingController lastNum = new TextEditingController();
+  final TextEditingController nguoichuyen1 = new TextEditingController();
+  final TextEditingController nguoichuyen2 = new TextEditingController();
+  final TextEditingController noidung1 = new TextEditingController();
+  final TextEditingController noidung2 = new TextEditingController();
+  final TextEditingController date1 = new TextEditingController();
+  final TextEditingController date2 = new TextEditingController();
+  final TextEditingController sotien1 = new TextEditingController();
+  final TextEditingController sotien2 = new TextEditingController();
   @override
   Widget build(BuildContext context) {
     double _width = MediaQuery.of(context).size.width;
@@ -31,142 +38,142 @@ class _ManageDetailAccState extends State<ManageDetailAcc> {
         title: Text("Manage Detail Account"),
         elevation: 0,
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          width: _width,
-          height: _height,
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          decoration: BoxDecoration(
-            image: DecorationImage(
+      body: Container(
+        width: _width,
+        height: _height,
+        padding: EdgeInsets.symmetric(horizontal: 20),
+        decoration: BoxDecoration(
+          image: DecorationImage(
               image: AssetImage("assets/bg.jpg"), fit: BoxFit.cover),
-          ),
-          child: Column(
-            children: <Widget>[
-              Form(
-                key: _formKey,
-                child: Container(
-                  width: _width,
-                  height: _height,
-                  child: Column(
-                    children: <Widget>[
-                      SizedBox(height: 20,),
-                      TextFormField(
-                        style: TextStyle(color: Colors.white),
-                        controller: userAcc,
-                        decoration: InputDecoration(
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.white
-                            )
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.white
-                            )
-                          ),
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white)
-                          ),
-                          hintText: '',
-                          labelStyle: TextStyle(color: Colors.white, fontSize: 13),
-                          hintStyle:
-                              TextStyle(color: Colors.white),
-                          labelText: 'Tên tài khoản (In hoa không dấu)'),
-                      ),
-                      SizedBox(height: 20,),
-                      TextFormField(
-                        controller: money,
-                        decoration: InputDecoration(
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.white
-                            )
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.white
-                            )
-                          ),
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white)
-                          ),
-                          hintText: '',
-                          labelStyle: TextStyle(color: Colors.white,  fontSize: 13),
-                          hintStyle:
-                              TextStyle(color: Colors.white),
-                          labelText: 'Số tiền (Thêm dấu , ngăn cách đơn vị nghìn, triệu, ...)'),
-                      ),
-                      SizedBox(height: 20,),
-                      TextFormField(
-                        controller: numberAcc,
-                        decoration: InputDecoration(
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.white
-                            )
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.white
-                            )
-                          ),
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white)
-                          ),
-                          hintText: '',
-                          labelStyle: TextStyle(color: Colors.white, fontSize: 13),
-                          hintStyle:
-                              TextStyle(color: Colors.white),
-                          labelText: 'Số tài khoản (Thêm dấu cách cho đúng STK Tech)'),
-                      ),
-                      SizedBox(height: 20,),
-                      TextFormField(
-                        controller: lastNum,
-                        decoration: InputDecoration(
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.white
-                            )
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.white
-                            )
-                          ),
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white)
-                          ),
-                          hintText: '',
-                          labelStyle: TextStyle(color: Colors.white, fontSize: 13),
-                          hintStyle:
-                              TextStyle(color: Colors.white),
-                          labelText: 'Đuôi SĐT'),
-                      ),
-                      SizedBox(
-                        height: 30,
-                      ),
-                      OutlinedButton(
-                        style: OutlinedButton.styleFrom(
-                          backgroundColor: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(20))
-                          ),
-                        ),
-                        onPressed: () {
-                          Provider.of<MyData>(context, listen: false).incrementDetail(money.text.toString(), userAcc.text.toString(), numberAcc.text.toString(), lastNum.text.toString());
-                          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
-                          HomeLoginScreen()), (Route<dynamic> route) => false);
-                        },
-                        child: Text("Cập nhật thông tin", style: TextStyle(color: Colors.black),)
-                      )
-                    ],
-                  ),
+        ),
+        child: SingleChildScrollView(
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                SizedBox(
+                  height: 20,
                 ),
-              ),
-            ],
+                TextForms(
+                    controller: userAcc,
+                    label: 'Tên tài khoản (In hoa không dấu)'),
+                SizedBox(
+                  height: 20,
+                ),
+                TextForms(
+                    controller: money,
+                    label:
+                        'Số tiền (Thêm dấu , ngăn cách đơn vị nghìn, triệu, ...)'),
+                SizedBox(
+                  height: 20,
+                ),
+                TextForms(
+                    controller: numberAcc,
+                    label:
+                        'Số tài khoản (Thêm dấu cách cho đúng STK Tech)'),
+                SizedBox(
+                  height: 20,
+                ),
+                TextForms(controller: date1, label: "Ngày thêm 1 (eg: 26 Thg 2, 2023)"),
+                SizedBox(
+                  height: 30,
+                ),
+                TextForms(controller: lastNum, label: "Người chuyển 1 (In hoa không dấu)"),
+                SizedBox(
+                  height: 30,
+                ),
+                TextForms(controller: lastNum, label: "Nội dung 1"),
+                SizedBox(
+                  height: 30,
+                ),
+                TextForms(controller: lastNum, label: "Số tiền 1 (eg: + 1,000,000)"),
+                SizedBox(
+                  height: 30,
+                ),
+                TextForms(controller: lastNum, label: "Ngày thêm 2 (eg: 26 Thg 2, 2023)"),
+                SizedBox(
+                  height: 30,
+                ),
+                TextForms(controller: lastNum, label: "Người chuyển 1 (In hoa không dấu)"),
+                SizedBox(
+                  height: 30,
+                ),
+                TextForms(controller: lastNum, label: "Nội dung 1"),
+                SizedBox(
+                  height: 30,
+                ),
+                TextForms(controller: lastNum, label: "Số tiền 1 (eg: + 1,000,000)"),
+                SizedBox(
+                  height: 30,
+                ),
+                OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(20))),
+                    ),
+                    onPressed: () {
+                      Provider.of<MyData>(context, listen: false)
+                          .incrementDetail(
+                              money.text.toString(),
+                              userAcc.text.toString(),
+                              numberAcc.text.toString(),
+                              lastNum.text.toString(),
+                              nguoichuyen1.text.toString(),
+                              nguoichuyen2.text.toString(),
+                              noidung1.text.toString(),
+                              noidung2.text.toString(),
+                              date1.text.toString(),
+                              date2.text.toString(),
+                              sotien1.text.toString(),
+                              sotien2.text.toString(),
+                            );
+                      Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(
+                              builder: (context) => HomeLoginScreen()),
+                          (Route<dynamic> route) => false);
+                    },
+                    child: Text(
+                      "Cập nhật thông tin",
+                      style: TextStyle(color: Colors.black),
+                    ))
+              ],
+            ),
           ),
         ),
       ),
+    );
+  }
+}
+
+class TextForms extends StatefulWidget {
+  const TextForms({super.key, required this.controller, required this.label});
+
+  final TextEditingController controller;
+  final String label;
+
+  @override
+  State<TextForms> createState() => _TextFormsState();
+}
+
+class _TextFormsState extends State<TextForms> {
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      controller: widget.controller,
+      decoration: InputDecoration(
+          focusedBorder:
+              OutlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+          enabledBorder:
+              OutlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+          border:
+              OutlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+          hintText: '',
+          labelStyle: TextStyle(color: Colors.white, fontSize: 13),
+          hintStyle: TextStyle(color: Colors.white),
+          labelText: widget.label),
     );
   }
 }
