@@ -521,7 +521,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       width: _width * 0.08,
                                     ),
                                     Container(
-                                      width: _width * 0.735,
+                                      width: _width * 0.68,
                                       height: 65,
                                       decoration: BoxDecoration(
                                           border: Border(
@@ -626,7 +626,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       width: _width * 0.08,
                                     ),
                                     Container(
-                                      width: _width * 0.735,
+                                      width: _width * 0.68,
                                       height: 65,
                                       decoration: BoxDecoration(
                                           border: Border(
@@ -840,7 +840,7 @@ class ContainerCom extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        width: _width*0.3,
+                        width: _width * 0.3,
                         height: 65,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.end,

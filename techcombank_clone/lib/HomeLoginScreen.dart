@@ -18,7 +18,8 @@ class HomeLoginScreen extends StatefulWidget {
   State<HomeLoginScreen> createState() => _HomeLoginScreenState();
 }
 
-class _HomeLoginScreenState extends State<HomeLoginScreen> with TickerProviderStateMixin {
+class _HomeLoginScreenState extends State<HomeLoginScreen>
+    with TickerProviderStateMixin {
   bool isCompleted = false;
   final TextEditingController _pinPutController = TextEditingController();
   late AnimationController _animationController;
@@ -38,20 +39,20 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> with TickerProviderSt
     _animationController.forward();
   }
 
-
   void setCompleted() {
     setState(() {
       isCompleted = true;
     });
   }
+
   void setCompletedFalse() {
     setState(() {
       isCompleted = false;
     });
   }
+
   @override
   Widget build(BuildContext context) {
-    
     double _width = MediaQuery.of(context).size.width;
     double _height = MediaQuery.of(context).size.height;
     const borderColor = Color.fromRGBO(23, 171, 144, 0.4);
@@ -64,22 +65,12 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> with TickerProviderSt
         fontSize: 22,
       ),
       decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            width: 2
-          )
-        ),
+        border: Border(bottom: BorderSide(width: 2)),
       ),
     );
 
     final focusPinTheme = defaultPinTheme.copyBorderWith(
-        border: Border(
-          bottom: BorderSide(
-            color: Color(0xff3682EC),
-            width: 2
-          )
-        )
-    );
+        border: Border(bottom: BorderSide(color: Color(0xff3682EC), width: 2)));
 
     return Scaffold(
       appBar: AppBar(
@@ -123,7 +114,6 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> with TickerProviderSt
                         );
                       },
                     ),
-                    
                   ],
                 ),
               ),
@@ -133,334 +123,444 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> with TickerProviderSt
               OutlinedButton(
                 onPressed: () {
                   showModalBottomSheet(
-                    transitionAnimationController: _animationController,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
+                      transitionAnimationController: _animationController,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(20),
                         topRight: Radius.circular(20),
-                      )
-                    ),
-                    isScrollControlled: true,
-                    context: context,
-                    builder: (context) {
-                      return FadeTransition(
-                        opacity: _animation,
-                        child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(20),
-                            topRight: Radius.circular(20),
-                          ),
-                          color: Color(0xffFFFFFF),
-                        ),
-                        height: _height*0.91,
-                        child: Stack(
-                          children: <Widget>[
-                            Container(
-                              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 25),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.pop(context);
-                                    },
-                                    child: Icon(Icons.close, color: Colors.grey.shade800,),
-                                  ),
-                                  SizedBox(
-                                    height: 40,
-                                  ),
-                                  Container(
-                                    width: 80,
-                                    child: Image.asset("assets/logo.jpg"),
-                                  ),
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  Text("Nhập mã mở khoá để xác thực", style: TextStyle(fontSize: 30, fontWeight: FontWeight.w500),),
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  Pinput(
-                                    obscureText: true,
-                                    controller: _pinPutController,
-                                    showCursor: false,
-                                    autofocus: true,
-                                    useNativeKeyboard: false,
-                                    length: 4,
-                                    defaultPinTheme: defaultPinTheme,
-                                    focusedPinTheme: focusPinTheme,
-                                    onChanged: (pin) {
-                                      if (pin.length != 4) {
-                                        setCompletedFalse();
-                                      } else if (pin.length == 4) {
-                                        setCompleted();
-                                        Future.delayed(Duration(milliseconds: 600)).then((value) {
-                                          _pinPutController.setText('');
-                                          Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
-                                        });
-                                      }
-                                    },
-                                  ),
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                  Text("Quên mã mở khoá?", style: TextStyle(color: Color(0xff616161),)),
-                                ],
+                      )),
+                      isScrollControlled: true,
+                      context: context,
+                      builder: (context) {
+                        return FadeTransition(
+                          opacity: _animation,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(20),
+                                topRight: Radius.circular(20),
                               ),
+                              color: Color(0xffFFFFFF),
                             ),
-                            Positioned(
-                              bottom: 0,
-                              left: 0,
-                              right: 0,
-                              child: Container(
-                                height: 300,
-                                color: Color(0xffD2D4DB),
-                                padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                            height: _height * 0.91,
+                            child: Stack(children: <Widget>[
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 25),
                                 child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
-                                    Expanded(
-                                      flex: 1,
-                                      child: Container(
-                                        child: Row(
-                                          children: <Widget>[
-                                            Expanded(
-                                              flex: 3,
-                                              child: Container(
-                                                child: Column(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                                  children: <Widget>[
-                                                    Expanded(
-                                                      flex: 1,
-                                                      child: Row(
-                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                        children: <Widget>[
-                                                          ButtonNumber(
-                                                            title: '1',
-                                                            color: Colors.white,
-                                                            onTap: () {
-                                                              _pinPutController.text += '1';
-                                                            },
-                                                          ),
-                                                          SizedBox(
-                                                            width: 5,
-                                                          ),
-                                                          ButtonNumber(title: '2', color: Colors.white,
-                                                            onTap: () {
-                                                              _pinPutController.text += '2';
-                                                            },
-                                                          ),
-                                                          SizedBox(
-                                                            width: 5,
-                                                          ),
-                                                          ButtonNumber(title: '3', color: Colors.white,
-                                                            onTap: () {
-                                                              _pinPutController.text += '3';
-                                                            },
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      height: 5,
-                                                    ),
-                                                    Expanded(
-                                                      flex: 1,
-                                                      child: Row(
-                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                        children: <Widget>[
-                                                          ButtonNumber(title: '4', color: Colors.white,
-                                                            onTap: () {
-                                                              _pinPutController.text += '4';
-                                                            },
-                                                          ),
-                                                          SizedBox(
-                                                            width: 5,
-                                                          ),
-                                                          ButtonNumber(title: '5', color: Colors.white,
-                                                            onTap: () {
-                                                              _pinPutController.text += '5';
-                                                            },
-                                                          ),
-                                                          SizedBox(
-                                                            width: 5,
-                                                          ),
-                                                          ButtonNumber(title: '6', color: Colors.white,
-                                                            onTap: () {
-                                                              _pinPutController.text += '6';
-                                                            },
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      height: 2.5,
-                                                    ),
-                                                  ],
-                                                ),
-                                              )
-                                            ),
-                                            Expanded(
-                                              flex: 1,
-                                              child: Container(
-                                                margin: EdgeInsets.only(left: 5, bottom: 2.5, ),
-                                                width: _width,
-                                                height: _height,
-                                                decoration: BoxDecoration(
-                                                  color: Color(0xffAFB2BC),
-                                                  borderRadius: BorderRadius.circular(5)
-                                                ),
-                                                child: OutlinedButton(
-                                                  style: OutlinedButton.styleFrom(
-                                                    shape: RoundedRectangleBorder(
-                                                      borderRadius: BorderRadius.circular(5)
-                                                    )
-                                                  ),
-                                                  onPressed: () {
-                                                    final splited = _pinPutController.text.toString().split('');
-                                                    splited.removeLast();
-                                                    var newstring = '';
-                                                    for (int i = 0; i < splited.length; i++) {
-                                                      newstring += splited[i];
-                                                    }
-                                                    setState(() {
-                                                      _pinPutController.text = newstring;
-                                                    });
-                                                  },
-                                                  child: Container(
-                                                    width: 30,
-                                                    child: Image.asset("assets/delete.jpg")
-                                                  )
-                                                ),
-                                              )
-                                            ),
-                                          ],
-                                        ),
-                                      )
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Icon(
+                                        Icons.close,
+                                        color: Colors.grey.shade800,
+                                      ),
                                     ),
-                                    Expanded(
-                                      flex: 1,
-                                      child: Container(
-                                        child: Row(
-                                          children: <Widget>[
-                                            Expanded(
-                                              flex: 3,
-                                              child: Container(
-                                                child: Column(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                                  children: <Widget>[
-                                                    SizedBox(
-                                                      height: 2.5,
-                                                    ),
-                                                    Expanded(
-                                                      flex: 1,
-                                                      child: Row(
-                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                        children: <Widget>[
-                                                          ButtonNumber(title: '7', color: Colors.white,
-                                                            onTap: () {
-                                                              _pinPutController.text += '7';
-                                                            },
-                                                          ),
-                                                          SizedBox(
-                                                            width: 5,
-                                                          ),
-                                                          ButtonNumber(title: '8', color: Colors.white,
-                                                            onTap: () {
-                                                              _pinPutController.text += '8';
-                                                            },
-                                                          ),
-                                                          SizedBox(
-                                                            width: 5,
-                                                          ),
-                                                          ButtonNumber(title: '9', color: Colors.white,
-                                                            onTap: () {
-                                                              _pinPutController.text += '9';
-                                                            },
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      height: 5,
-                                                    ),
-                                                    Expanded(
-                                                      flex: 1,
-                                                      child: Row(
-                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                        children: <Widget>[
-                                                          Expanded(
-                                                            flex: 1,
-                                                            child: Container(
-                                                              width: _width,
-                                                              height: _height*0.9,
-                                                            )
-                                                          ),
-                                                          SizedBox(
-                                                            width: 5,
-                                                          ),
-                                                          ButtonNumber(title: '0', color: Colors.white,
-                                                            onTap: () {
-                                                              _pinPutController.text += '0';
-                                                            },
-                                                          ),
-                                                          SizedBox(
-                                                            width: 5,
-                                                          ),
-                                                          Expanded(
-                                                            flex: 1,
-                                                            child: Container(
-                                                              width: _width,
-                                                              height: _height*0.9,
-                                                            )
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      height: 2.5,
-                                                    ),
-                                                  ],
-                                                ),
-                                              )
-                                            ),
-                                            Expanded(
-                                              flex: 1,
-                                              child: Container(
-                                                margin: EdgeInsets.only(left: 5, bottom: 2.5, ),
-                                                width: _width,
-                                                height: _height,
-                                                decoration: BoxDecoration(
-                                                  color: !isCompleted ? Color(0xffC5C5C5) : Color(0xffAFB2BC),
-                                                  borderRadius: BorderRadius.circular(5)
-                                                ),
-                                                child: OutlinedButton(
-                                                  style: OutlinedButton.styleFrom(
-                                                    shape: RoundedRectangleBorder(
-                                                      borderRadius: BorderRadius.circular(5)
-                                                    )
-                                                  ),
-                                                  onPressed: () {
-        
-                                                  },
-                                                  child: Text("Xong", style: TextStyle(color: !isCompleted ? Color(0xffA0A0A0) : Colors.black, fontSize: 18),)
-                                                ),
-                                              )
-                                            ),
-                                          ],
-                                        ),
-                                      )
+                                    SizedBox(
+                                      height: 40,
                                     ),
+                                    Container(
+                                      width: 80,
+                                      child: Image.asset("assets/logo.jpg"),
+                                    ),
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    Text(
+                                      "Nhập mã mở khoá để xác thực",
+                                      style: TextStyle(
+                                          fontSize: 30,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    Pinput(
+                                      obscureText: true,
+                                      controller: _pinPutController,
+                                      showCursor: false,
+                                      autofocus: true,
+                                      useNativeKeyboard: false,
+                                      length: 4,
+                                      defaultPinTheme: defaultPinTheme,
+                                      focusedPinTheme: focusPinTheme,
+                                      onChanged: (pin) {
+                                        if (pin.length != 4) {
+                                          setCompletedFalse();
+                                        } else if (pin.length == 4) {
+                                          setCompleted();
+                                          Future.delayed(
+                                                  Duration(milliseconds: 600))
+                                              .then((value) {
+                                            _pinPutController.setText('');
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        HomeScreen()));
+                                          });
+                                        }
+                                      },
+                                    ),
+                                    SizedBox(
+                                      height: 15,
+                                    ),
+                                    Text("Quên mã mở khoá?",
+                                        style: TextStyle(
+                                          color: Color(0xff616161),
+                                        )),
                                   ],
                                 ),
-                              )
-                            ),
-                          ]
-                        ),
-                      ),
-                      );
-                    }
-                  );
+                              ),
+                              Positioned(
+                                  bottom: 0,
+                                  left: 0,
+                                  right: 0,
+                                  child: Container(
+                                    height: 300,
+                                    color: Color(0xffD2D4DB),
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 5, vertical: 5),
+                                    child: Column(
+                                      children: <Widget>[
+                                        Expanded(
+                                            flex: 1,
+                                            child: Container(
+                                              child: Row(
+                                                children: <Widget>[
+                                                  Expanded(
+                                                      flex: 3,
+                                                      child: Container(
+                                                        child: Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceAround,
+                                                          children: <Widget>[
+                                                            Expanded(
+                                                              flex: 1,
+                                                              child: Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceBetween,
+                                                                children: <
+                                                                    Widget>[
+                                                                  ButtonNumber(
+                                                                    title: '1',
+                                                                    color: Colors
+                                                                        .white,
+                                                                    onTap: () {
+                                                                      _pinPutController
+                                                                              .text +=
+                                                                          '1';
+                                                                    },
+                                                                  ),
+                                                                  SizedBox(
+                                                                    width: 5,
+                                                                  ),
+                                                                  ButtonNumber(
+                                                                    title: '2',
+                                                                    color: Colors
+                                                                        .white,
+                                                                    onTap: () {
+                                                                      _pinPutController
+                                                                              .text +=
+                                                                          '2';
+                                                                    },
+                                                                  ),
+                                                                  SizedBox(
+                                                                    width: 5,
+                                                                  ),
+                                                                  ButtonNumber(
+                                                                    title: '3',
+                                                                    color: Colors
+                                                                        .white,
+                                                                    onTap: () {
+                                                                      _pinPutController
+                                                                              .text +=
+                                                                          '3';
+                                                                    },
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                            SizedBox(
+                                                              height: 5,
+                                                            ),
+                                                            Expanded(
+                                                              flex: 1,
+                                                              child: Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceBetween,
+                                                                children: <
+                                                                    Widget>[
+                                                                  ButtonNumber(
+                                                                    title: '4',
+                                                                    color: Colors
+                                                                        .white,
+                                                                    onTap: () {
+                                                                      _pinPutController
+                                                                              .text +=
+                                                                          '4';
+                                                                    },
+                                                                  ),
+                                                                  SizedBox(
+                                                                    width: 5,
+                                                                  ),
+                                                                  ButtonNumber(
+                                                                    title: '5',
+                                                                    color: Colors
+                                                                        .white,
+                                                                    onTap: () {
+                                                                      _pinPutController
+                                                                              .text +=
+                                                                          '5';
+                                                                    },
+                                                                  ),
+                                                                  SizedBox(
+                                                                    width: 5,
+                                                                  ),
+                                                                  ButtonNumber(
+                                                                    title: '6',
+                                                                    color: Colors
+                                                                        .white,
+                                                                    onTap: () {
+                                                                      _pinPutController
+                                                                              .text +=
+                                                                          '6';
+                                                                    },
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                            SizedBox(
+                                                              height: 2.5,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      )),
+                                                  Expanded(
+                                                      flex: 1,
+                                                      child: Container(
+                                                        margin: EdgeInsets.only(
+                                                          left: 5,
+                                                          bottom: 2.5,
+                                                        ),
+                                                        width: _width,
+                                                        height: _height,
+                                                        decoration: BoxDecoration(
+                                                            color: Color(
+                                                                0xffAFB2BC),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        5)),
+                                                        child: OutlinedButton(
+                                                            style: OutlinedButton.styleFrom(
+                                                                shape: RoundedRectangleBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            5))),
+                                                            onPressed: () {
+                                                              final splited =
+                                                                  _pinPutController
+                                                                      .text
+                                                                      .toString()
+                                                                      .split(
+                                                                          '');
+                                                              splited
+                                                                  .removeLast();
+                                                              var newstring =
+                                                                  '';
+                                                              for (int i = 0;
+                                                                  i <
+                                                                      splited
+                                                                          .length;
+                                                                  i++) {
+                                                                newstring +=
+                                                                    splited[i];
+                                                              }
+                                                              setState(() {
+                                                                _pinPutController
+                                                                        .text =
+                                                                    newstring;
+                                                              });
+                                                            },
+                                                            child: Container(
+                                                                width: 30,
+                                                                child: Image.asset(
+                                                                    "assets/delete.jpg"))),
+                                                      )),
+                                                ],
+                                              ),
+                                            )),
+                                        Expanded(
+                                            flex: 1,
+                                            child: Container(
+                                              child: Row(
+                                                children: <Widget>[
+                                                  Expanded(
+                                                      flex: 3,
+                                                      child: Container(
+                                                        child: Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceAround,
+                                                          children: <Widget>[
+                                                            SizedBox(
+                                                              height: 2.5,
+                                                            ),
+                                                            Expanded(
+                                                              flex: 1,
+                                                              child: Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceBetween,
+                                                                children: <
+                                                                    Widget>[
+                                                                  ButtonNumber(
+                                                                    title: '7',
+                                                                    color: Colors
+                                                                        .white,
+                                                                    onTap: () {
+                                                                      _pinPutController
+                                                                              .text +=
+                                                                          '7';
+                                                                    },
+                                                                  ),
+                                                                  SizedBox(
+                                                                    width: 5,
+                                                                  ),
+                                                                  ButtonNumber(
+                                                                    title: '8',
+                                                                    color: Colors
+                                                                        .white,
+                                                                    onTap: () {
+                                                                      _pinPutController
+                                                                              .text +=
+                                                                          '8';
+                                                                    },
+                                                                  ),
+                                                                  SizedBox(
+                                                                    width: 5,
+                                                                  ),
+                                                                  ButtonNumber(
+                                                                    title: '9',
+                                                                    color: Colors
+                                                                        .white,
+                                                                    onTap: () {
+                                                                      _pinPutController
+                                                                              .text +=
+                                                                          '9';
+                                                                    },
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                            SizedBox(
+                                                              height: 5,
+                                                            ),
+                                                            Expanded(
+                                                              flex: 1,
+                                                              child: Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceBetween,
+                                                                children: <
+                                                                    Widget>[
+                                                                  Expanded(
+                                                                      flex: 1,
+                                                                      child:
+                                                                          Container(
+                                                                        width:
+                                                                            _width,
+                                                                        height: _height *
+                                                                            0.9,
+                                                                      )),
+                                                                  SizedBox(
+                                                                    width: 5,
+                                                                  ),
+                                                                  ButtonNumber(
+                                                                    title: '0',
+                                                                    color: Colors
+                                                                        .white,
+                                                                    onTap: () {
+                                                                      _pinPutController
+                                                                              .text +=
+                                                                          '0';
+                                                                    },
+                                                                  ),
+                                                                  SizedBox(
+                                                                    width: 5,
+                                                                  ),
+                                                                  Expanded(
+                                                                      flex: 1,
+                                                                      child:
+                                                                          Container(
+                                                                        width:
+                                                                            _width,
+                                                                        height: _height *
+                                                                            0.9,
+                                                                      )),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                            SizedBox(
+                                                              height: 2.5,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      )),
+                                                  Expanded(
+                                                      flex: 1,
+                                                      child: Container(
+                                                        margin: EdgeInsets.only(
+                                                          left: 5,
+                                                          bottom: 2.5,
+                                                        ),
+                                                        width: _width,
+                                                        height: _height,
+                                                        decoration: BoxDecoration(
+                                                            color: !isCompleted
+                                                                ? Color(
+                                                                    0xffC5C5C5)
+                                                                : Color(
+                                                                    0xffAFB2BC),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        5)),
+                                                        child: OutlinedButton(
+                                                            style: OutlinedButton.styleFrom(
+                                                                shape: RoundedRectangleBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            5))),
+                                                            onPressed: () {},
+                                                            child: Text(
+                                                              "Xong",
+                                                              style: TextStyle(
+                                                                  color: !isCompleted
+                                                                      ? Color(
+                                                                          0xffA0A0A0)
+                                                                      : Colors
+                                                                          .black,
+                                                                  fontSize: 18),
+                                                            )),
+                                                      )),
+                                                ],
+                                              ),
+                                            )),
+                                      ],
+                                    ),
+                                  )),
+                            ]),
+                          ),
+                        );
+                      });
                 },
                 style: OutlinedButton.styleFrom(
                     backgroundColor: Colors.white,
@@ -482,9 +582,8 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> with TickerProviderSt
                 width: _width,
                 height: 95,
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10)
-                ),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10)),
                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -525,7 +624,8 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> with TickerProviderSt
                                 child: Text(
                                   'Chuyển tiền & thanh toán',
                                   textAlign: TextAlign.center,
-                                  style: TextStyle(fontSize: 12),overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(fontSize: 12),
+                                  overflow: TextOverflow.ellipsis,
                                   maxLines: 2,
                                 ))
                           ],
@@ -545,7 +645,8 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> with TickerProviderSt
                                 child: Text(
                                   'Quét mã QR',
                                   textAlign: TextAlign.center,
-                                  style: TextStyle(fontSize: 12),overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(fontSize: 12),
+                                  overflow: TextOverflow.ellipsis,
                                   maxLines: 2,
                                 ))
                           ],
@@ -557,14 +658,16 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> with TickerProviderSt
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Container(
-                                width: _width * 0.07, child: Image.asset("assets/pay.jpg")),
+                                width: _width * 0.07,
+                                child: Image.asset("assets/pay.jpg")),
                             Container(
                                 width: _width * 0.17,
                                 alignment: Alignment.center,
                                 child: Text(
                                   'Rút tiền không thẻ',
                                   textAlign: TextAlign.center,
-                                  style: TextStyle(fontSize: 12),overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(fontSize: 12),
+                                  overflow: TextOverflow.ellipsis,
                                   maxLines: 2,
                                 ))
                           ],
@@ -572,22 +675,26 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> with TickerProviderSt
                       ),
                       GestureDetector(
                         onTap: () {
-                          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
-                          ManageDetailAcc()), (Route<dynamic> route) => false);
+                          Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(
+                                  builder: (context) => ManageDetailAcc()),
+                              (Route<dynamic> route) => false);
                         },
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Container(
-                                width: _width * 0.07, child: Image.asset("assets/home.jpg")),
+                                width: _width * 0.07,
+                                child: Image.asset("assets/home.jpg")),
                             Container(
                                 width: _width * 0.17,
                                 alignment: Alignment.center,
                                 child: Text(
                                   'Khám phá sản phẩm',
                                   textAlign: TextAlign.center,
-                                  style: TextStyle(fontSize: 12),overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(fontSize: 12),
+                                  overflow: TextOverflow.ellipsis,
                                   maxLines: 2,
                                 ))
                           ],
@@ -600,7 +707,7 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> with TickerProviderSt
               ),
               Container(
                 width: _width,
-                height: 87*3,
+                height: 87 * 3,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color: Colors.white,
@@ -615,34 +722,38 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> with TickerProviderSt
                         child: Row(
                           children: <Widget>[
                             Expanded(
-                              flex: 1,
-                              child: Center(
-                                child: Container(
-                                  width: 30,
-                                  child: Image.asset("assets/book.jpg")
-                                ),
-                              )
-                            ),
+                                flex: 1,
+                                child: Center(
+                                  child: Container(
+                                      width: 30,
+                                      child: Image.asset("assets/book.jpg")),
+                                )),
                             SizedBox(
                               width: 20,
                             ),
                             Expanded(
-                              flex: 7,
-                              child: Container(
-                                height: _height,
-                                decoration: BoxDecoration(
-                                  border: Border(bottom: BorderSide(width: 1))       
-                                ),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Text('Hướng dẫn sử dụng', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
-                                    Icon(Icons.keyboard_arrow_right)
-                                  ],
-                                ),
-                              )
-                            ),
+                                flex: 7,
+                                child: Container(
+                                  height: _height,
+                                  decoration: BoxDecoration(
+                                      border:
+                                          Border(bottom: BorderSide(width: 1))),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      Text(
+                                        'Hướng dẫn sử dụng',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20),
+                                      ),
+                                      Icon(Icons.keyboard_arrow_right)
+                                    ],
+                                  ),
+                                )),
                           ],
                         ),
                       ),
@@ -655,34 +766,38 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> with TickerProviderSt
                         child: Row(
                           children: <Widget>[
                             Expanded(
-                              flex: 1,
-                              child: Center(
-                                child: Container(
-                                  width: 30,
-                                  child: Image.asset("assets/warning.jpg")
-                                ),
-                              )
-                            ),
+                                flex: 1,
+                                child: Center(
+                                  child: Container(
+                                      width: 30,
+                                      child: Image.asset("assets/warning.jpg")),
+                                )),
                             SizedBox(
                               width: 20,
                             ),
                             Expanded(
-                              flex: 7,
-                              child: Container(
-                                height: _height,
-                                decoration: BoxDecoration(
-                                  border: Border(bottom: BorderSide(width: 1))       
-                                ),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Text('Hướng dẫn bảo mật', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
-                                    Icon(Icons.keyboard_arrow_right)
-                                  ],
-                                ),
-                              )
-                            ),
+                                flex: 7,
+                                child: Container(
+                                  height: _height,
+                                  decoration: BoxDecoration(
+                                      border:
+                                          Border(bottom: BorderSide(width: 1))),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      Text(
+                                        'Hướng dẫn bảo mật',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20),
+                                      ),
+                                      Icon(Icons.keyboard_arrow_right)
+                                    ],
+                                  ),
+                                )),
                           ],
                         ),
                       ),
@@ -695,31 +810,35 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> with TickerProviderSt
                         child: Row(
                           children: <Widget>[
                             Expanded(
-                              flex: 1,
-                              child: Center(
-                                child: Container(
-                                  width: 30,
-                                  child: Image.asset("assets/phone.jpg")
-                                ),
-                              )
-                            ),
+                                flex: 1,
+                                child: Center(
+                                  child: Container(
+                                      width: 30,
+                                      child: Image.asset("assets/phone.jpg")),
+                                )),
                             SizedBox(
                               width: 20,
                             ),
                             Expanded(
-                              flex: 7,
-                              child: Container(
-                                height: _height,
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Text('Liên hệ', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
-                                    Icon(Icons.keyboard_arrow_right)
-                                  ],
-                                ),
-                              )
-                            ),
+                                flex: 7,
+                                child: Container(
+                                  height: _height,
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      Text(
+                                        'Liên hệ',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20),
+                                      ),
+                                      Icon(Icons.keyboard_arrow_right)
+                                    ],
+                                  ),
+                                )),
                           ],
                         ),
                       ),
@@ -732,22 +851,26 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> with TickerProviderSt
               ),
               Container(
                 width: _width,
-                height: 280,
+                height: 310,
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(10))
-                ),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(10))),
                 child: Column(
                   children: <Widget>[
                     Container(
                       width: _width,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10))
-                      ),
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(10),
+                              topRight: Radius.circular(10))),
                       child: ClipRRect(
-                        borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
-                        child: Image.asset("assets/map.jpg", fit: BoxFit.cover,)
-                      ),
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(10),
+                              topRight: Radius.circular(10)),
+                          child: Image.asset(
+                            "assets/map.jpg",
+                            fit: BoxFit.cover,
+                          )),
                     ),
                     Container(
                       width: _width,
@@ -755,34 +878,51 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> with TickerProviderSt
                       child: Row(
                         children: <Widget>[
                           SizedBox(
-                            width: _width*0.14,
+                            width: _width * 0.14,
                           ),
                           Container(
                             child: Column(
                               children: <Widget>[
                                 Container(
-                                  width: _width*0.7,
+                                  width: _width * 0.7,
                                   height: 80,
                                   decoration: BoxDecoration(
-                                    // color: Colors.yellow,
-                                    border: Border(
-                                      bottom: BorderSide(width: 1, color: Color(0xffCCCCCC))
-                                    )
-                                  ),
+                                      // color: Colors.yellow,
+                                      border: Border(
+                                          bottom: BorderSide(
+                                              width: 1,
+                                              color: Color(0xffCCCCCC)))),
                                   alignment: Alignment.centerLeft,
-                                  child: Text("Tìm chi nhánh & ATM", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),),
+                                  child: Text(
+                                    "Tìm chi nhánh & ATM",
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600),
+                                  ),
                                 ),
                                 Container(
-                                  width: _width*0.7,
+                                  width: _width * 0.7,
                                   height: 80,
                                   padding: EdgeInsets.symmetric(vertical: 14),
                                   alignment: Alignment.centerLeft,
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
                                     children: [
-                                      Text("Đặt lịch hẹn", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),),
-                                      Text("Để được hỗ trợ và phục vụ tốt nhất tại quầy", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),),
+                                      Text(
+                                        "Đặt lịch hẹn",
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                      Text(
+                                        "Để được hỗ trợ và phục vụ tốt nhất tại quầy",
+                                        style: TextStyle(
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w400),
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -803,9 +943,8 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> with TickerProviderSt
                 height: 150,
                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(10))
-                ),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(10))),
                 child: Container(
                   width: _width,
                   alignment: Alignment.bottomCenter,
@@ -819,26 +958,33 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> with TickerProviderSt
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Tổng đài Techcombank", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300),),
-                            Text("1800 588 822", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),)
+                            Text(
+                              "Tổng đài Techcombank",
+                              style: TextStyle(
+                                  fontSize: 14, fontWeight: FontWeight.w300),
+                            ),
+                            Text(
+                              "1800 588 822",
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.w600),
+                            )
                           ],
                         ),
                       ),
                       OutlinedButton(
                         onPressed: () {},
                         style: OutlinedButton.styleFrom(
-                          backgroundColor: Colors.black,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20))),
-                          child: Container(
+                            backgroundColor: Colors.black,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20))),
+                        child: Container(
                             alignment: Alignment.centerRight,
                             width: 70,
                             height: 40,
                             child: Text(
                               "Gọi",
                               style: TextStyle(color: Colors.white),
-                          )
-                        ),
+                            )),
                       )
                     ],
                   ),
@@ -859,7 +1005,6 @@ class _HomeLoginScreenState extends State<HomeLoginScreen> with TickerProviderSt
     _animationController.dispose();
     super.dispose();
   }
-
 }
 
 class ButtonNumber extends StatelessWidget {
@@ -874,22 +1019,25 @@ class ButtonNumber extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Expanded(
-      flex: 1,
-      child: Container(
-        width: width,
-        height: height*0.9,
-        child: OutlinedButton(
-          style: OutlinedButton.styleFrom(
-            backgroundColor: color,
-            shadowColor: Colors.grey.shade900,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(5)
-            )
-          ),
-          onPressed: onTap,
-          child: Text(title!, textAlign: TextAlign.center, style: TextStyle(color: Colors.black, fontSize: 28, fontWeight: FontWeight.w400),)
-        ),
-      )
-    );
+        flex: 1,
+        child: Container(
+          width: width,
+          height: height * 0.9,
+          child: OutlinedButton(
+              style: OutlinedButton.styleFrom(
+                  backgroundColor: color,
+                  shadowColor: Colors.grey.shade900,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5))),
+              onPressed: onTap,
+              child: Text(
+                title!,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 28,
+                    fontWeight: FontWeight.w400),
+              )),
+        ));
   }
 }
