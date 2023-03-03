@@ -79,31 +79,31 @@ class _ManageDetailAccState extends State<ManageDetailAcc> {
                 SizedBox(
                   height: 30,
                 ),
-                TextForms(controller: lastNum, label: "Người chuyển 1 (In hoa không dấu)"),
+                TextForms(controller: nguoichuyen1, label: "Người chuyển 1 (In hoa không dấu)"),
                 SizedBox(
                   height: 30,
                 ),
-                TextForms(controller: lastNum, label: "Nội dung 1"),
+                TextForms(controller: noidung1, label: "Nội dung 1"),
                 SizedBox(
                   height: 30,
                 ),
-                TextForms(controller: lastNum, label: "Số tiền 1 (eg: + 1,000,000)"),
+                TextForms(controller: sotien1, label: "Số tiền 1 (eg: + 1,000,000)"),
                 SizedBox(
                   height: 30,
                 ),
-                TextForms(controller: lastNum, label: "Ngày thêm 2 (eg: 26 Thg 2, 2023)"),
+                TextForms(controller: date2, label: "Ngày thêm 2 (eg: 26 Thg 2, 2023)"),
                 SizedBox(
                   height: 30,
                 ),
-                TextForms(controller: lastNum, label: "Người chuyển 1 (In hoa không dấu)"),
+                TextForms(controller: nguoichuyen2, label: "Người chuyển 1 (In hoa không dấu)"),
                 SizedBox(
                   height: 30,
                 ),
-                TextForms(controller: lastNum, label: "Nội dung 1"),
+                TextForms(controller: noidung2, label: "Nội dung 1"),
                 SizedBox(
                   height: 30,
                 ),
-                TextForms(controller: lastNum, label: "Số tiền 1 (eg: + 1,000,000)"),
+                TextForms(controller: sotien2, label: "Số tiền 1 (eg: + 1,000,000)"),
                 SizedBox(
                   height: 30,
                 ),

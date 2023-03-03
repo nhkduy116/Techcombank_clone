@@ -534,7 +534,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         children: [
                                           Container(
                                             height: 65,
-                                            width: 180,
+                                            width: _width*0.4,
                                             child: Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
@@ -639,7 +639,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         children: [
                                           Container(
                                             height: 65,
-                                            width: 180,
+                                            width: _width*0.4,
                                             child: Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
@@ -672,7 +672,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             ),
                                           ),
                                           Container(
-                                            width: 105,
+                                            width: _width*0.1,
                                             height: 65,
                                             child: Column(
                                               crossAxisAlignment:
@@ -840,7 +840,7 @@ class ContainerCom extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        width: 105,
+                        width: _width*0.1,
                         height: 65,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
