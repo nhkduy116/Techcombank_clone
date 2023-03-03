@@ -672,8 +672,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                             ),
                                           ),
                                           Container(
-                                            width: _width*0.3,
-                                            height: 65,
+                                            // width: _width*0.3,
+                                            // height: 65,
                                             child: Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.end,
