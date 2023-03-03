@@ -220,7 +220,7 @@ class _HomeLoginScreenState extends State<HomeLoginScreen>
                                   left: 0,
                                   right: 0,
                                   child: Container(
-                                    height: 300,
+                                    height: 250,
                                     color: Color(0xffD2D4DB),
                                     padding: EdgeInsets.symmetric(
                                         horizontal: 5, vertical: 5),
@@ -358,7 +358,7 @@ class _HomeLoginScreenState extends State<HomeLoginScreen>
                                                                 BorderRadius
                                                                     .circular(
                                                                         5)),
-                                                        child: OutlinedButton(
+                                                         child: OutlinedButton(
                                                             style: OutlinedButton.styleFrom(
                                                                 shape: RoundedRectangleBorder(
                                                                     borderRadius:
@@ -411,7 +411,7 @@ class _HomeLoginScreenState extends State<HomeLoginScreen>
                                                                   .spaceAround,
                                                           children: <Widget>[
                                                             SizedBox(
-                                                              height: 2.5,
+                                                              height: 5,
                                                             ),
                                                             Expanded(
                                                               flex: 1,
@@ -517,39 +517,43 @@ class _HomeLoginScreenState extends State<HomeLoginScreen>
                                                   Expanded(
                                                       flex: 1,
                                                       child: Container(
-                                                        margin: EdgeInsets.only(
-                                                          left: 5,
-                                                          bottom: 2.5,
+                                                        padding: EdgeInsets.only(top: 2.5),
+                                                        child: Container(
+                                                          margin: EdgeInsets.only(
+                                                            left: 5,
+                                                            // top: 9,
+                                                            bottom: 2.5,
+                                                          ),
+                                                          width: _width,
+                                                          height: _height,
+                                                          decoration: BoxDecoration(
+                                                              color: !isCompleted
+                                                                  ? Color(
+                                                                      0xffC5C5C5)
+                                                                  : Color(
+                                                                      0xffAFB2BC),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          5)),
+                                                          child: OutlinedButton(
+                                                              style: OutlinedButton.styleFrom(
+                                                                  shape: RoundedRectangleBorder(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              5))),
+                                                              onPressed: () {},
+                                                              child: Text(
+                                                                "Xong",
+                                                                style: TextStyle(
+                                                                    color: !isCompleted
+                                                                        ? Color(
+                                                                            0xffA0A0A0)
+                                                                        : Colors
+                                                                            .black,
+                                                                    fontSize: 18),
+                                                              )),
                                                         ),
-                                                        width: _width,
-                                                        height: _height,
-                                                        decoration: BoxDecoration(
-                                                            color: !isCompleted
-                                                                ? Color(
-                                                                    0xffC5C5C5)
-                                                                : Color(
-                                                                    0xffAFB2BC),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        5)),
-                                                        child: OutlinedButton(
-                                                            style: OutlinedButton.styleFrom(
-                                                                shape: RoundedRectangleBorder(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            5))),
-                                                            onPressed: () {},
-                                                            child: Text(
-                                                              "Xong",
-                                                              style: TextStyle(
-                                                                  color: !isCompleted
-                                                                      ? Color(
-                                                                          0xffA0A0A0)
-                                                                      : Colors
-                                                                          .black,
-                                                                  fontSize: 18),
-                                                            )),
                                                       )),
                                                 ],
                                               ),
@@ -1022,7 +1026,7 @@ class ButtonNumber extends StatelessWidget {
         flex: 1,
         child: Container(
           width: width,
-          height: height * 0.9,
+          height: 60,
           child: OutlinedButton(
               style: OutlinedButton.styleFrom(
                   backgroundColor: color,

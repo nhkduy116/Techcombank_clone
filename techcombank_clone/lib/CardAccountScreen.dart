@@ -4,6 +4,7 @@ import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:techcombank_clone/CardAccountDetailScreen.dart';
 import 'package:techcombank_clone/DataAcc.dart';
 
 class CardAccountScreen extends StatelessWidget {
@@ -53,7 +54,7 @@ class CardAccountScreen extends StatelessWidget {
               child: Column(
                 children: <Widget>[
                   Container(
-                    height: 70,
+                    height: 65,
                     padding: EdgeInsets.symmetric(vertical: 10),
                     color: Colors.white,
                     child: ButtonsTabBar(
@@ -64,7 +65,7 @@ class CardAccountScreen extends StatelessWidget {
                           color: Colors.black, fontWeight: FontWeight.bold),
                       labelStyle: TextStyle(
                           color: Colors.white, fontWeight: FontWeight.bold),
-                      unselectedBorderColor: Colors.black,
+                      unselectedBorderColor: Colors.grey.shade300,
                       radius: 100,
                       borderWidth: 1,
                       tabs: [
@@ -89,86 +90,114 @@ class CardAccountScreen extends StatelessWidget {
                   Expanded(
                     child: TabBarView(
                       children: <Widget>[
-                        Container(
-                            child: Column(
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10)),
-                              margin: EdgeInsets.symmetric(
-                                  vertical: 20, horizontal: 20),
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 30, horizontal: 20),
-                              width: _width,
-                              height: 150,
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) =>
+                                    CardAccountDetailScreen()));
+                          },
+                          child: Container(
                               child: Column(
-                                children: [
-                                  Container(
-                                    child: Row(children: [
-                                      Container(
-                                          margin: EdgeInsets.symmetric(
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(10)),
+                                margin: EdgeInsets.symmetric(
+                                    vertical: 16, horizontal: 16),
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 20, horizontal: 20),
+                                width: _width,
+                                height: 130,
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      child: Row(children: [
+                                        Container(
+                                            margin: EdgeInsets.symmetric(
+                                                horizontal: 10),
+                                            width: 30,
+                                            child: Image.asset(
+                                                'assets/wallet3.jpg')),
+                                        Container(
+                                          padding: EdgeInsets.symmetric(
                                               horizontal: 10),
-                                          width: 30,
-                                          child: Image.asset(
-                                              'assets/wallet3.jpg')),
-                                      Container(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 10),
-                                        child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Container(
-                                                child: Text(
-                                                  "Tài khoản thanh toán", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
+                                          child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Container(
+                                                  child: Text(
+                                                    "Tài khoản thanh toán",
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 16),
+                                                  ),
                                                 ),
-                                              ),
-                                              SizedBox(height: 5,),
-                                              Container(
-                                                child: Consumer<MyData>(
-                                                  builder: (context, myData, child) {
+                                                SizedBox(
+                                                  height: 5,
+                                                ),
+                                                Container(
+                                                  child: Consumer<MyData>(
+                                                      builder: (context, myData,
+                                                          child) {
                                                     return Text(
-                                                      myData.numberAcc.toString(), style: TextStyle(color: Color(0xff757575)),
+                                                      myData.numberAcc
+                                                          .toString(),
+                                                      style: TextStyle(
+                                                          color: Color(
+                                                              0xff757575)),
                                                     );
-                                                  }
-                                                ),
-                                              )
-                                            ]),
-                                      )
-                                    ]),
-                                  ),
-                                  Container(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 0, vertical: 15),
-                                    child:
-                                        Divider(color: Colors.black, height: 2),
-                                  ),
-                                  Container(
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        Text("VND "),
-                                        Consumer<MyData>(
-                                          builder: (context, myData, child) {
-                                            return Text(myData.money.toString(), style: TextStyle(fontWeight: FontWeight.bold));
-                                          }
-                                        ),
-                                      ],
+                                                  }),
+                                                )
+                                              ]),
+                                        )
+                                      ]),
                                     ),
-                                  ),
-                                ],
+                                    Container(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 0, vertical: 14),
+                                      child: Divider(
+                                          color: Colors.black45, height: 4),
+                                    ),
+                                    Container(
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          Text(
+                                            "VND ",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.grey),
+                                          ),
+                                          Consumer<MyData>(builder:
+                                              (context, myData, child) {
+                                            return Text(myData.money.toString(),
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold));
+                                          }),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                            Container(
-                              height: 40,
-                              child: Text(
-                                "Xem tài khoản lưu trữ",
-                                style: TextStyle(color: Colors.blue),
-                              ),
-                            )
-                          ],
-                        )),
+                              Container(
+                                margin: EdgeInsets.only(top: 10),
+                                height: 40,
+                                child: Text(
+                                  "Xem tài khoản lưu trữ",
+                                  style: TextStyle(
+                                      color: Colors.blue,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              )
+                            ],
+                          )),
+                        ),
                         Center(
                           child: Icon(Icons.directions_transit),
                         ),
