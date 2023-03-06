@@ -41,7 +41,8 @@ dependencies:
   pinput: ^2.2.31
   carousel_slider: ^4.2.1
   provider: ^6.0.5
-
+  pin_code_fields: ^7.4.0
+  shared_preferences: ^2.0.8
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -54,10 +55,10 @@ dev_dependencies:
   flutter_lints: ^2.0.0
   flutter_launcher_icons: ^0.12.0
 
-flutter_icons:
-  android: true
-  ios: true
-  image_path: "assets/logo.jpg"
+# flutter_icons:
+#   android: true
+#   ios: true
+#   image_path: "assets/ic_launcher.png"
   # min_sdk_android: 21
 
 # For information on the generic Dart part of this file, see the

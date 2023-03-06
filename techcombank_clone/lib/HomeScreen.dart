@@ -1,12 +1,14 @@
-// ignore_for_file: prefer_const_constructors, file_names, no_leading_underscores_for_local_identifiers, unused_local_variable, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, sized_box_for_whitespace, unused_import, unnecessary_import, unnecessary_new, unnecessary_null_comparison, prefer_typing_uninitialized_variables, unused_field, implementation_imports, prefer_interpolation_to_compose_strings
+// ignore_for_file: prefer_const_constructors, file_names, no_leading_underscores_for_local_identifiers, unused_local_variable, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, sized_box_for_whitespace, unused_import, unnecessary_import, unnecessary_new, unnecessary_null_comparison, prefer_typing_uninitialized_variables, unused_field, implementation_imports, prefer_interpolation_to_compose_strings, unrelated_type_equality_checks
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:techcombank_clone/CardAccountScreen.dart';
 import 'package:techcombank_clone/DataAcc.dart';
 import 'package:techcombank_clone/ManageDetailAcc.dart';
+import 'package:techcombank_clone/barClick.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -16,10 +18,32 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  late String soDu;
+  late String ngayChuyen1, nguoiChuyen1, noiDung1, soTien1;
+  late String ngayChuyen2, nguoiChuyen2, noiDung2, soTien2;
+  void loadData() async {
+    final pref = await SharedPreferences.getInstance();
+    setState(() {
+      soDu = pref.getString("money") ?? "";
+
+      ngayChuyen1 = pref.getString("date1") ?? "";
+      nguoiChuyen1 = pref.getString("nguoichuyen1") ?? "";
+      noiDung1 = pref.getString("noidung1") ?? "";
+      soTien1 = pref.getString("sotien1") ?? "";
+
+      ngayChuyen2 = pref.getString("date2") ?? "";
+      nguoiChuyen2 = pref.getString("nguoichuyen2") ?? "";
+      noiDung2 = pref.getString("noidung2") ?? "";
+      soTien2 = pref.getString("sotien2") ?? "";
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     double _width = MediaQuery.of(context).size.width;
     double _height = MediaQuery.of(context).size.height;
+    MyData dataAcc = MyData();
+    loadData();
     return Scaffold(
         body: Container(
       width: _width,
@@ -44,141 +68,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: 50,
                       height: 50,
                       child: Image(image: AssetImage("assets/menu.png"))),
-                  onTap: () {
-                    Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(
-                            builder: (context) => ManageDetailAcc()),
-                        (Route<dynamic> route) => false);
-                  },
                 ),
               ),
               SizedBox(
-                height: 300,
+                height: 268,
               ),
-              Container(
-                width: _width,
-                height: 95,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10)),
-                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: ((context) => CardAccountScreen())));
-                        },
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Container(
-                                width: _width * 0.07,
-                                child: Image.asset("assets/wallet.jpg")),
-                            Container(
-                                width: _width * 0.17,
-                                // height: 5,
-                                alignment: Alignment.center,
-                                child: Text(
-                                  'Tài khoản & Thẻ',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(fontSize: 12),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 2,
-                                ))
-                          ],
-                        ),
-                      ),
-                      GestureDetector(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Container(
-                                width: _width * 0.07,
-                                child: Image.asset("assets/change.jpg")),
-                            Container(
-                                width: _width * 0.17,
-                                alignment: Alignment.center,
-                                child: Text(
-                                  'Chuyển tiền & thanh toán',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(fontSize: 12),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 2,
-                                ))
-                          ],
-                        ),
-                      ),
-                      GestureDetector(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Container(
-                                width: _width * 0.07,
-                                child: Image.asset("assets/qrcode.jpg")),
-                            Container(
-                                width: _width * 0.17,
-                                alignment: Alignment.center,
-                                child: Text(
-                                  'Quét mã QR',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(fontSize: 12),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 2,
-                                ))
-                          ],
-                        ),
-                      ),
-                      GestureDetector(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Container(
-                                width: _width * 0.07,
-                                child: Image.asset("assets/pay.jpg")),
-                            Container(
-                                width: _width * 0.17,
-                                alignment: Alignment.center,
-                                child: Text(
-                                  'Rút tiền không thẻ',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(fontSize: 12),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 2,
-                                ))
-                          ],
-                        ),
-                      ),
-                      GestureDetector(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Container(
-                                width: _width * 0.07,
-                                child: Image.asset("assets/home.jpg")),
-                            Container(
-                                width: _width * 0.17,
-                                alignment: Alignment.center,
-                                child: Text(
-                                  'Khám phá sản phẩm',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(fontSize: 12),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 2,
-                                ))
-                          ],
-                        ),
-                      ),
-                    ]),
-              ),
+              BarClick(width: _width, check: false),
               SizedBox(
                 height: 30,
               ),
@@ -459,7 +354,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               Container(
                 width: _width,
-                height: 420,
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                 decoration: BoxDecoration(
                     color: Colors.white,
@@ -487,36 +381,43 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     Container(
                       width: _width,
-                      height: 120,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Consumer<MyData>(builder: (context, myData, child) {
-                            return Text(
-                              myData.date1.toString(),
-                              style: TextStyle(
-                                  color: Color(0xff868686),
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500),
-                            );
-                          }),
+                          Text(
+                            ngayChuyen1,
+                            style: TextStyle(
+                                color: Color(0xff868686),
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(
+                            height: 40,
+                          ),
                           Container(
                             width: _width,
                             height: 65,
                             child: Row(
                               children: [
+                                Column(
+                                  children: [
+                                    Container(
+                                        width: 23,
+                                        child: Image.asset("assets/nhan.png")),
+                                  ],
+                                ),
                                 SizedBox(
-                                  width: _width * 0.08,
+                                  width: 10,
                                 ),
                                 Container(
-                                  width: _width * 0.68,
+                                  width: _width * 0.71,
                                   height: 70,
                                   decoration: BoxDecoration(
                                       border: Border(
                                           bottom: BorderSide(
-                                              width: 1,
-                                              color: Color(0xffCCCCCC)))),
+                                              width: 0.7,
+                                              color: Colors.black12))),
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
@@ -528,50 +429,39 @@ class _HomeScreenState extends State<HomeScreen> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Consumer<MyData>(builder:
-                                                (context, myData, child) {
-                                              return Text(
-                                                myData.nguoichuyen1.toString(),
-                                                style: TextStyle(
-                                                    fontSize: 17,
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                              );
-                                            }),
+                                            Text(
+                                              nguoiChuyen1,
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
                                             SizedBox(
                                               height: 5,
                                             ),
-                                            Consumer<MyData>(builder:
-                                                (context, myData, child) {
-                                              return Text(
-                                                myData.noidung1.toString(),
-                                                style: TextStyle(
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                              );
-                                            }),
+                                            Text(
+                                              noiDung1,
+                                              style: TextStyle(
+                                                  fontSize: 12.5,
+                                                  color: Colors.grey),
+                                            ),
                                           ],
                                         ),
                                       ),
                                       Container(
-                                        width: 105,
                                         height: 65,
                                         child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           crossAxisAlignment:
                                               CrossAxisAlignment.end,
                                           children: [
-                                            Consumer<MyData>(builder:
-                                                (context, myData, child) {
-                                              return Text(
-                                                "+ "+myData.sotien1.toString(),
-                                                style: TextStyle(
-                                                    color: Color(0xff868686),
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                              );
-                                            })
+                                            Text(
+                                              soTien1,
+                                              style: TextStyle(
+                                                  color: Color(0xff20825B),
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold),
+                                            )
                                           ],
                                         ),
                                       )
@@ -584,100 +474,106 @@ class _HomeScreenState extends State<HomeScreen> {
                         ],
                       ),
                     ),
-                    SizedBox(
-                      height: 30,
-                    ),
                     Container(
                       width: _width,
-                      height: 120,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Consumer<MyData>(builder: (context, myData, child) {
-                            return Text(
-                              myData.date2.toString(),
-                              style: TextStyle(
-                                  color: Color(0xff868686),
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500),
-                            );
-                          }),
+                          (ngayChuyen2 == "")
+                              ? SizedBox(
+                                  height: 20,
+                                )
+                              : Container(
+                                  child: Column(children: [
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  Text(
+                                    ngayChuyen2,
+                                    style: TextStyle(
+                                        color: Color(0xff868686),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  SizedBox(
+                                    height: 40,
+                                  ),
+                                ])),
                           Container(
                             width: _width,
                             height: 65,
                             child: Row(
                               children: [
+                                Column(
+                                  children: [
+                                    Container(
+                                        width: 23,
+                                        child: Image.asset("assets/nhan.png")),
+                                  ],
+                                ),
                                 SizedBox(
-                                  width: _width * 0.08,
+                                  width: 10,
                                 ),
                                 Container(
-                                  width: _width * 0.68,
+                                  width: _width * 0.71,
                                   height: 70,
                                   decoration: BoxDecoration(
                                       border: Border(
                                           bottom: BorderSide(
-                                              width: 1,
-                                              color: Color(0xffCCCCCC)))),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Container(
-                                        height: 65,
-                                        // width: _width*0.4,
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Consumer<MyData>(builder:
-                                                (context, myData, child) {
-                                              return Text(
-                                                myData.nguoichuyen2.toString(),
+                                              width: 0.7,
+                                              color: Colors.black12))),
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(vertical: 1),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Container(
+                                          height: 65,
+                                          // width: _width*0.4,
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                nguoiChuyen2,
                                                 style: TextStyle(
-                                                    fontSize: 17,
+                                                    fontSize: 16,
                                                     fontWeight:
-                                                        FontWeight.w500),
-                                              );
-                                            }),
-                                            SizedBox(
-                                              height: 5,
-                                            ),
-                                            Consumer<MyData>(builder:
-                                                (context, myData, child) {
-                                              return Text(
-                                                myData.noidung2.toString(),
+                                                        FontWeight.bold),
+                                              ),
+                                              SizedBox(
+                                                height: 5,
+                                              ),
+                                              Text(
+                                                noiDung2,
                                                 style: TextStyle(
+                                                    fontSize: 12.5,
+                                                    color: Colors.grey),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          height: 65,
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.end,
+                                            children: [
+                                              Text(
+                                                soTien2,
+                                                style: TextStyle(
+                                                    color: Color(0xff20825B),
                                                     fontSize: 14,
                                                     fontWeight:
-                                                        FontWeight.w500),
-                                              );
-                                            }),
-                                          ],
-                                        ),
-                                      ),
-                                      Container(
-                                        // width: _width*0.3,
-                                        // height: 65,
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.end,
-                                          children: [
-                                            Consumer<MyData>(builder:
-                                                (context, myData, child) {
-                                              return Text(
-                                                "+ "+myData.sotien2.toString(),
-                                                style: TextStyle(
-                                                    color: Color(0xff868686),
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                              );
-                                            })
-                                          ],
-                                        ),
-                                      )
-                                    ],
+                                                        FontWeight.bold),
+                                              )
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 )
                               ],
@@ -730,21 +626,13 @@ class _HomeScreenState extends State<HomeScreen> {
                           children: <Widget>[
                             Text(
                               "Tài khoản thanh toán",
-                              style: TextStyle(color: Color(0xff646464)),
+                              style: TextStyle(
+                                  fontSize: 12, color: Color(0xff646464)),
                             ),
                             SizedBox(
                               height: 5,
                             ),
-                            Consumer<MyData>(
-                              builder: (context, myData, child) {
-                                return Text(
-                                  myData.money.toString(),
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w600),
-                                );
-                              },
-                            )
+                            Text(soDu, style: TextStyle(fontSize: 16.5))
                           ],
                         ),
                       ))
@@ -753,100 +641,5 @@ class _HomeScreenState extends State<HomeScreen> {
             ))
       ])),
     ));
-  }
-}
-
-class ContainerCom extends StatelessWidget {
-  const ContainerCom(
-      {super.key,
-      required this.ngay,
-      required this.nguoichuyen,
-      required this.noidung,
-      required this.sotien});
-
-  final String ngay, nguoichuyen, noidung, sotien;
-
-  @override
-  Widget build(BuildContext context) {
-    double _width = MediaQuery.of(context).size.width;
-    return Container(
-      width: _width,
-      height: 120,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            ngay,
-            style: TextStyle(
-                color: Color(0xff868686),
-                fontSize: 14,
-                fontWeight: FontWeight.w500),
-          ),
-          Container(
-            width: _width,
-            height: 65,
-            child: Row(
-              children: [
-                SizedBox(
-                  width: _width * 0.08,
-                ),
-                Container(
-                  width: _width * 0.735,
-                  height: 65,
-                  decoration: BoxDecoration(
-                      border: Border(
-                          bottom:
-                              BorderSide(width: 1, color: Color(0xffCCCCCC)))),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        height: 65,
-                        width: 180,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              nguoichuyen,
-                              style: TextStyle(
-                                  fontSize: 17, fontWeight: FontWeight.w500),
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Text(
-                              noidung,
-                              style: TextStyle(
-                                  fontSize: 14, fontWeight: FontWeight.w500),
-                            )
-                          ],
-                        ),
-                      ),
-                      Container(
-                        width: _width * 0.3,
-                        height: 65,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Text(
-                              sotien,
-                              style: TextStyle(
-                                  color: Color(0xff868686),
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500),
-                            )
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                )
-              ],
-            ),
-          )
-        ],
-      ),
-    );
   }
 }
