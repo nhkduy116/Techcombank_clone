@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, file_names, no_leading_underscores_for_local_identifiers, unused_local_variable, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, sized_box_for_whitespace, unused_import, unnecessary_import, unnecessary_new, unnecessary_null_comparison, prefer_typing_uninitialized_variables, unused_field
+// ignore_for_file: prefer_const_constructors, file_names, no_leading_underscores_for_local_identifiers, unused_local_variable, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, sized_box_for_whitespace, unused_import, unnecessary_import, unnecessary_new, unnecessary_null_comparison, prefer_typing_uninitialized_variables, unused_field, prefer_interpolation_to_compose_strings
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -6,10 +6,12 @@ import 'package:flutter/services.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:pinput/pinput.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:techcombank_clone/CardAccountScreen.dart';
 import 'package:techcombank_clone/DataAcc.dart';
 import 'package:techcombank_clone/HomeScreen.dart';
 import 'package:techcombank_clone/ManageDetailAcc.dart';
+import 'package:techcombank_clone/barClick.dart';
 
 class HomeLoginScreen extends StatefulWidget {
   const HomeLoginScreen({super.key});
@@ -24,6 +26,16 @@ class _HomeLoginScreenState extends State<HomeLoginScreen>
   final TextEditingController _pinPutController = TextEditingController();
   late AnimationController _animationController;
   late Animation<double> _animation;
+
+  String? sangToi = "", nameAcc = "";
+
+  void loadData() async {
+    final pref = await SharedPreferences.getInstance();
+    setState(() {
+      nameAcc = pref.getString("name") ?? "";
+      sangToi = pref.getString("sangToi") ?? "";
+    });
+  }
 
   @override
   void initState() {
@@ -53,16 +65,18 @@ class _HomeLoginScreenState extends State<HomeLoginScreen>
 
   @override
   Widget build(BuildContext context) {
+    loadData();
     double _width = MediaQuery.of(context).size.width;
     double _height = MediaQuery.of(context).size.height;
     const borderColor = Color.fromRGBO(23, 171, 144, 0.4);
+    double textSizeQuetMaQr = 11.7;
 
     final defaultPinTheme = PinTheme(
-      width: 40,
-      height: 56,
+      width: 32,
+      height: 50,
       margin: EdgeInsets.only(right: 16),
       textStyle: const TextStyle(
-        fontSize: 22,
+        fontSize: 60,
       ),
       decoration: BoxDecoration(
         border: Border(bottom: BorderSide(width: 2)),
@@ -73,14 +87,10 @@ class _HomeLoginScreenState extends State<HomeLoginScreen>
         border: Border(bottom: BorderSide(color: Color(0xff3682EC), width: 2)));
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(0xffBA2F32),
-        elevation: 0,
-      ),
       body: Container(
+        padding: EdgeInsets.symmetric(horizontal: 15),
         width: _width,
         height: _height,
-        padding: EdgeInsets.symmetric(horizontal: 15),
         decoration: BoxDecoration(
           image: DecorationImage(
               image: AssetImage("assets/bg.jpg"), fit: BoxFit.cover),
@@ -90,35 +100,40 @@ class _HomeLoginScreenState extends State<HomeLoginScreen>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               SizedBox(
-                height: 10,
+                height: 115,
               ),
               Container(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text(
-                      "Chào buổi sáng,",
-                      style: TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white),
-                    ),
-                    Consumer<MyData>(
-                      builder: (context, myData, child) {
-                        return Text(
-                          myData.name.toString(),
+                    Consumer<MyData>(builder: (context, myData, child) {
+                      String data = myData.sangToi;
+                      return Container(
+                        padding: EdgeInsets.only(top: 10),
+                        child: Text(
+                          "Chào buổi " + sangToi! + ",",
                           style: TextStyle(
-                              fontSize: 30,
+                              fontSize: 24,
                               fontWeight: FontWeight.bold,
                               color: Colors.white),
-                        );
-                      },
+                        ),
+                      );
+                    }),
+                    Container(
+                      padding: EdgeInsets.only(top: 2),
+                      child: Text(
+                        nameAcc!,
+                        style: TextStyle(
+                            fontSize: 28,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                      ),
                     ),
                   ],
                 ),
               ),
               SizedBox(
-                height: 15,
+                height: 13,
               ),
               OutlinedButton(
                 onPressed: () {
@@ -180,9 +195,10 @@ class _HomeLoginScreenState extends State<HomeLoginScreen>
                                     ),
                                     Pinput(
                                       obscureText: true,
+                                      obscuringCharacter: "•",
                                       controller: _pinPutController,
-                                      showCursor: false,
                                       autofocus: true,
+                                      showCursor: false,
                                       useNativeKeyboard: false,
                                       length: 4,
                                       defaultPinTheme: defaultPinTheme,
@@ -358,7 +374,7 @@ class _HomeLoginScreenState extends State<HomeLoginScreen>
                                                                 BorderRadius
                                                                     .circular(
                                                                         5)),
-                                                         child: OutlinedButton(
+                                                        child: OutlinedButton(
                                                             style: OutlinedButton.styleFrom(
                                                                 shape: RoundedRectangleBorder(
                                                                     borderRadius:
@@ -517,9 +533,12 @@ class _HomeLoginScreenState extends State<HomeLoginScreen>
                                                   Expanded(
                                                       flex: 1,
                                                       child: Container(
-                                                        padding: EdgeInsets.only(top: 2.5),
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                top: 2.5),
                                                         child: Container(
-                                                          margin: EdgeInsets.only(
+                                                          margin:
+                                                              EdgeInsets.only(
                                                             left: 5,
                                                             // top: 9,
                                                             bottom: 2.5,
@@ -551,7 +570,8 @@ class _HomeLoginScreenState extends State<HomeLoginScreen>
                                                                             0xffA0A0A0)
                                                                         : Colors
                                                                             .black,
-                                                                    fontSize: 18),
+                                                                    fontSize:
+                                                                        18),
                                                               )),
                                                         ),
                                                       )),
@@ -572,146 +592,27 @@ class _HomeLoginScreenState extends State<HomeLoginScreen>
                         borderRadius: BorderRadius.circular(20))),
                 child: Container(
                     alignment: Alignment.center,
-                    width: 120,
-                    height: 40,
+                    width: 105,
+                    height: 29,
                     child: Text(
                       "Đăng nhập",
-                      style: TextStyle(color: Colors.black),
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold),
                     )),
               ),
               SizedBox(
-                height: 120,
+                height: 98,
               ),
-              Container(
-                width: _width,
-                height: 95,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10)),
-                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      GestureDetector(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Container(
-                                width: _width * 0.07,
-                                child: Image.asset("assets/wallet.jpg")),
-                            Container(
-                                width: _width * 0.17,
-                                // height: 5,
-                                alignment: Alignment.center,
-                                child: Text(
-                                  'Tài khoản & Thẻ',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(fontSize: 12),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 2,
-                                ))
-                          ],
-                        ),
-                      ),
-                      GestureDetector(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Container(
-                                width: _width * 0.07,
-                                child: Image.asset("assets/change.jpg")),
-                            Container(
-                                width: _width * 0.17,
-                                alignment: Alignment.center,
-                                child: Text(
-                                  'Chuyển tiền & thanh toán',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(fontSize: 12),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 2,
-                                ))
-                          ],
-                        ),
-                      ),
-                      GestureDetector(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Container(
-                                width: _width * 0.07,
-                                child: Image.asset("assets/qrcode.jpg")),
-                            Container(
-                                width: _width * 0.17,
-                                alignment: Alignment.center,
-                                child: Text(
-                                  'Quét mã QR',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(fontSize: 12),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 2,
-                                ))
-                          ],
-                        ),
-                      ),
-                      GestureDetector(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Container(
-                                width: _width * 0.07,
-                                child: Image.asset("assets/pay.jpg")),
-                            Container(
-                                width: _width * 0.17,
-                                alignment: Alignment.center,
-                                child: Text(
-                                  'Rút tiền không thẻ',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(fontSize: 12),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 2,
-                                ))
-                          ],
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).pushAndRemoveUntil(
-                              MaterialPageRoute(
-                                  builder: (context) => ManageDetailAcc()),
-                              (Route<dynamic> route) => false);
-                        },
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Container(
-                                width: _width * 0.07,
-                                child: Image.asset("assets/home.jpg")),
-                            Container(
-                                width: _width * 0.17,
-                                alignment: Alignment.center,
-                                child: Text(
-                                  'Khám phá sản phẩm',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(fontSize: 12),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 2,
-                                ))
-                          ],
-                        ),
-                      ),
-                    ]),
-              ),
+              // Khám phá
+              BarClick(width: _width, check: true),
               SizedBox(
-                height: 20,
+                height: 25,
               ),
               Container(
                 width: _width,
-                height: 87 * 3,
+                height: 230,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color: Colors.white,
@@ -740,8 +641,10 @@ class _HomeLoginScreenState extends State<HomeLoginScreen>
                                 child: Container(
                                   height: _height,
                                   decoration: BoxDecoration(
-                                      border:
-                                          Border(bottom: BorderSide(width: 1))),
+                                      border: Border(
+                                          bottom: BorderSide(
+                                              width: 1.2,
+                                              color: Colors.grey.shade300))),
                                   child: Row(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
@@ -752,7 +655,7 @@ class _HomeLoginScreenState extends State<HomeLoginScreen>
                                         'Hướng dẫn sử dụng',
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
-                                            fontSize: 20),
+                                            fontSize: 16),
                                       ),
                                       Icon(Icons.keyboard_arrow_right)
                                     ],
@@ -784,8 +687,10 @@ class _HomeLoginScreenState extends State<HomeLoginScreen>
                                 child: Container(
                                   height: _height,
                                   decoration: BoxDecoration(
-                                      border:
-                                          Border(bottom: BorderSide(width: 1))),
+                                      border: Border(
+                                          bottom: BorderSide(
+                                              width: 1.2,
+                                              color: Colors.grey.shade300))),
                                   child: Row(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
@@ -796,7 +701,7 @@ class _HomeLoginScreenState extends State<HomeLoginScreen>
                                         'Hướng dẫn bảo mật',
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
-                                            fontSize: 20),
+                                            fontSize: 16),
                                       ),
                                       Icon(Icons.keyboard_arrow_right)
                                     ],
@@ -837,7 +742,7 @@ class _HomeLoginScreenState extends State<HomeLoginScreen>
                                         'Liên hệ',
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
-                                            fontSize: 20),
+                                            fontSize: 16),
                                       ),
                                       Icon(Icons.keyboard_arrow_right)
                                     ],
@@ -851,11 +756,11 @@ class _HomeLoginScreenState extends State<HomeLoginScreen>
                 ),
               ),
               SizedBox(
-                height: 20,
+                height: 25,
               ),
               Container(
                 width: _width,
-                height: 310,
+                height: 285,
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.all(Radius.circular(10))),
@@ -900,7 +805,7 @@ class _HomeLoginScreenState extends State<HomeLoginScreen>
                                   child: Text(
                                     "Tìm chi nhánh & ATM",
                                     style: TextStyle(
-                                        fontSize: 16,
+                                        fontSize: 14,
                                         fontWeight: FontWeight.w600),
                                   ),
                                 ),
@@ -918,7 +823,7 @@ class _HomeLoginScreenState extends State<HomeLoginScreen>
                                       Text(
                                         "Đặt lịch hẹn",
                                         style: TextStyle(
-                                            fontSize: 16,
+                                            fontSize: 14,
                                             fontWeight: FontWeight.w600),
                                       ),
                                       Text(
@@ -940,7 +845,7 @@ class _HomeLoginScreenState extends State<HomeLoginScreen>
                 ),
               ),
               SizedBox(
-                height: 20,
+                height: 25,
               ),
               Container(
                 width: _width,
@@ -984,7 +889,7 @@ class _HomeLoginScreenState extends State<HomeLoginScreen>
                         child: Container(
                             alignment: Alignment.centerRight,
                             width: 70,
-                            height: 40,
+                            height: 30,
                             child: Text(
                               "Gọi",
                               style: TextStyle(color: Colors.white),

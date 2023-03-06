@@ -2,18 +2,34 @@
 
 import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:techcombank_clone/CardAccountDetailScreen.dart';
 import 'package:techcombank_clone/DataAcc.dart';
 
-class CardAccountScreen extends StatelessWidget {
+class CardAccountScreen extends StatefulWidget {
   const CardAccountScreen({super.key});
 
   @override
+  State<CardAccountScreen> createState() => _CardAccountScreen();
+}
+
+class _CardAccountScreen extends State<CardAccountScreen> {
+  late String soDu, soTaiKhoan;
+  void loadData() async {
+    final pref = await SharedPreferences.getInstance();
+    setState(() {
+      soDu = pref.getString("money") ?? "";
+      soTaiKhoan = pref.getString("numberAcc") ?? "";
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    loadData();
     double _width = MediaQuery.of(context).size.width;
     double _height = MediaQuery.of(context).size.height;
+    MyData dataAcc = MyData();
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
@@ -89,114 +105,116 @@ class CardAccountScreen extends StatelessWidget {
                   ),
                   Expanded(
                     child: TabBarView(
+                      physics: NeverScrollableScrollPhysics(),
                       children: <Widget>[
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) =>
-                                    CardAccountDetailScreen()));
-                          },
-                          child: Container(
-                              child: Column(
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(10)),
-                                margin: EdgeInsets.symmetric(
-                                    vertical: 16, horizontal: 16),
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 20, horizontal: 20),
-                                width: _width,
-                                height: 130,
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      child: Row(children: [
+                        Column(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) =>
+                                        CardAccountDetailScreen()));
+                              },
+                              child: Container(
+                                  child: Column(
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    margin: EdgeInsets.symmetric(
+                                        vertical: 16, horizontal: 16),
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 20, horizontal: 20),
+                                    width: _width,
+                                    height: 140,
+                                    child: Column(
+                                      children: [
                                         Container(
-                                            margin: EdgeInsets.symmetric(
-                                                horizontal: 10),
-                                            width: 30,
-                                            child: Image.asset(
-                                                'assets/wallet3.jpg')),
+                                          child: Row(children: [
+                                            Container(
+                                                margin: EdgeInsets.symmetric(
+                                                    horizontal: 10),
+                                                width: 30,
+                                                child: Image.asset(
+                                                    'assets/wallet3.jpg')),
+                                            Container(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 10),
+                                              child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Container(
+                                                      child: Text(
+                                                        "Tài khoản thanh toán",
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize: 16),
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 10,
+                                                    ),
+                                                    Container(
+                                                      child: Text(
+                                                        soTaiKhoan,
+                                                        style: TextStyle(
+                                                            fontSize: 15,
+                                                            color: Color(
+                                                                0xff757575)),
+                                                      ),
+                                                    ),
+                                                  ]),
+                                            )
+                                          ]),
+                                        ),
                                         Container(
                                           padding: EdgeInsets.symmetric(
-                                              horizontal: 10),
-                                          child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Container(
-                                                  child: Text(
-                                                    "Tài khoản thanh toán",
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 16),
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  height: 5,
-                                                ),
-                                                Container(
-                                                  child: Consumer<MyData>(
-                                                      builder: (context, myData,
-                                                          child) {
-                                                    return Text(
-                                                      myData.numberAcc
-                                                          .toString(),
-                                                      style: TextStyle(
-                                                          color: Color(
-                                                              0xff757575)),
-                                                    );
-                                                  }),
-                                                )
-                                              ]),
-                                        )
-                                      ]),
-                                    ),
-                                    Container(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 0, vertical: 14),
-                                      child: Divider(
-                                          color: Colors.black45, height: 4),
-                                    ),
-                                    Container(
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          Text(
-                                            "VND ",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.grey),
-                                          ),
-                                          Consumer<MyData>(builder:
-                                              (context, myData, child) {
-                                            return Text(myData.money.toString(),
+                                              horizontal: 0, vertical: 12),
+                                          child: Divider(
+                                              color: Colors.black45, height: 4),
+                                        ),
+                                        Container(
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: [
+                                              Text(
+                                                "VND ",
                                                 style: TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold));
-                                          }),
-                                        ],
-                                      ),
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.grey),
+                                              ),
+                                              Text(soDu,
+                                                  style: TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.bold))
+                                            ],
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
+                              )),
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(top: 17),
+                              height: 40,
+                              child: Text(
+                                "Xem tài khoản lưu trữ",
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.blue,
+                                    fontWeight: FontWeight.bold),
                               ),
-                              Container(
-                                margin: EdgeInsets.only(top: 10),
-                                height: 40,
-                                child: Text(
-                                  "Xem tài khoản lưu trữ",
-                                  style: TextStyle(
-                                      color: Colors.blue,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              )
-                            ],
-                          )),
+                            )
+                          ],
                         ),
                         Center(
                           child: Icon(Icons.directions_transit),
